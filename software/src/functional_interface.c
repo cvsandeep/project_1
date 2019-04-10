@@ -55,10 +55,10 @@
 **      val - Value of color
 **
 **   Description:
-**      Converts an HSV value into a 565 RGB color and outputs to RGB LED
+**      Converts an HSV value into a 565 RGB color and updates the RGB LED
 */
 
-void HSVtoRGBconvert(u8 hue, u8 sat, u8 val) {
+void UpdateRGBled(u8 hue, u8 sat, u8 val) {
    u8 region, remain, p, q, t;
    u8 R, G, B;
    region = hue / 43;
@@ -95,6 +95,84 @@ void HSVtoRGBconvert(u8 hue, u8 sat, u8 val) {
    	NX4IO_RGBLED_setChnlEn(RGB2, true, true, true);
    	NX4IO_RGBLED_setDutyCycle(RGB2, R, G, B);
 
+}
+
+u8 GetHue(void)
+{
+	u32 state = ENC_getState(&pmodENC_inst);
+	static u8 Hue = 0;
+	//if (ENC_buttonPressed(state) && !ENC_buttonPressed(laststate))
+	Hue+= ENC_getRotation(state, laststate);
+	laststate = state;
+	return Hue;
+}
+
+u8 GetSat(void)
+{
+	static u8 Sat = 0;
+		if (NX4IO_isPressed(BTNL))
+		{
+			if (Sat == 255)
+				Sat = 0;
+			else
+				Sat++;
+		}
+		if (NX4IO_isPressed(BTNR))
+		{
+			if (Sat > 0)
+				Sat--;
+		}
+	return Sat;
+}
+
+u8 GetVal(void)
+{
+	static u8 Val = 0;
+	if (NX4IO_isPressed(BTNU))
+	{
+		if (Val == 255)
+			Val = 0;
+		else
+			Val++;
+	}
+	if (NX4IO_isPressed(BTND))
+	{
+		if (Val > 0)
+			Val--;
+	}
+	return Val;
+}
+
+bool GetDetectType(void)
+{
+	u32 leds_data = NX4IO_getLEDS_DATA();
+	if((NX4IO_getSwitches() & 0x001) == 1 )
+	{
+		NX4IO_setLEDs(leds_data | (1UL << 2));
+		return true;
+	} else
+	{
+		NX4IO_setLEDs(leds_data & ~(1UL << 2));
+		return false;
+	}
+}
+
+bool IsExit(void)
+{
+	u32 state = ENC_getState(&pmodENC_inst);
+	if (ENC_buttonPressed(state) && !ENC_buttonPressed(laststate))//only check on button posedge
+	{
+		laststate = state;
+		return 0;
+	}
+
+	if (NX4IO_isPressed(BTNC))
+	{
+		return 0;
+	}
+
+	laststate = state;
+	return 1;
 }
 
 /************************ TEST FUNCTIONS ************************************/

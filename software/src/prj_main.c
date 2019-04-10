@@ -16,6 +16,8 @@ int main(void)
     init_platform();
 
 	uint32_t sts;
+	u8 hue, sat, val;
+	bool detect;
 
 	sts = do_init();
 	if (XST_SUCCESS != sts)
@@ -51,7 +53,7 @@ int main(void)
 	NX410_SSEG_setAllDigits(SSEGLO, CC_BLANK, CC_BLANK, CC_BLANK, CC_BLANK, DP_NONE);
 	NX410_SSEG_setAllDigits(SSEGHI, CC_BLANK, CC_BLANK, CC_BLANK, CC_BLANK, DP_NONE);
 	// loop the test until the user presses the center button
-	while (1)
+	while (0)
 	{
 		// Run an iteration of the test
 		RunTest5();
@@ -69,6 +71,34 @@ int main(void)
 			timestamp += 100;
 			usleep(100 * 1000);
 		}
+	}
+
+	laststate = ENC_getState(&pmodENC_inst);
+	while ( IsExit() )
+	{
+		hue = GetHue();
+		sat = GetSat();
+		val = GetVal();
+		UpdateRGBled(hue, sat, val);
+		//UpdatePmodDispaly();
+
+		detect = GetDetectType(); // 0 - Sw Detect; 1- HW Detect
+
+		if(detect)
+		{
+			//Hw Detect
+			microblaze_disable_interrupts();
+			//UpdateLed();
+			//UpdateHWDutyCycle();
+
+		} else
+		{
+			//SW Detect
+			microblaze_enable_interrupts();
+			//UpdateLed();
+			//UpdateSWDutyCycle();
+		}
+
 	}
 
 	// announce that we're done
