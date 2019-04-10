@@ -46,6 +46,57 @@
 #include "hw_interface.h"
 #include "functional_interface.h"
 
+/* ------------------------------------------------------------ */
+/*** HSV to RGB Converter
+**
+**   Parameters:
+**      hue - Hue of color
+**      sat - Saturation of color
+**      val - Value of color
+**
+**   Description:
+**      Converts an HSV value into a 565 RGB color and outputs to RGB LED
+*/
+
+void HSVtoRGBconvert(u8 hue, u8 sat, u8 val) {
+   u8 region, remain, p, q, t;
+   u8 R, G, B;
+   region = hue / 43;
+   remain = (hue - (region * 43)) * 6;
+   p = (val * (255 - sat)) >> 8;
+   q = (val * (255 - ((sat * remain) >> 8))) >> 8;
+   t = (val * (255 - ((sat * (255 - remain)) >> 8))) >> 8;
+
+   switch (region) {
+   case 0:
+      R = val; G = t; B = p;
+      break;
+   case 1:
+      R = q; G = val; B = p;
+      break;
+   case 2:
+      R = p; G = val; B = t;
+      break;
+   case 3:
+      R = p; G = q; B = val;
+      break;
+   case 4:
+      R = t; G = p; B = val;
+      break;
+   default:
+      R = val; G = p; B = q;
+      break;
+   }
+
+   // For RGB1
+   	NX4IO_RGBLED_setChnlEn(RGB1, true, true, true);
+   	NX4IO_RGBLED_setDutyCycle(RGB1, R, G, B);
+   	// For RGB2
+   	NX4IO_RGBLED_setChnlEn(RGB2, true, true, true);
+   	NX4IO_RGBLED_setDutyCycle(RGB2, R, G, B);
+
+}
+
 /************************ TEST FUNCTIONS ************************************/
 
 /****************************************************************************/

@@ -8,6 +8,8 @@
 #ifndef SRC_FUNCTIONAL_INTERFACE_H_
 #define SRC_FUNCTIONAL_INTERFACE_H_
 
+void HSVtoRGBconvert(u8 hue, u8 sat, u8 val);
+
 void RunTest1(void);
 void RunTest2(void);
 void RunTest3(void);
