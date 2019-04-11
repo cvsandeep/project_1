@@ -16,6 +16,9 @@ u8 GetSat(void);
 u8 GetVal(void);
 bool GetDetectType(void);
 bool IsExit(void);
+void DisplayDutycycle(u8 r_duty, u8 g_duty, u8 b_duty);
+void OLEDrgb_PutStringXY(u8 x, u8 y, char* s);
+void OLEDrgb_PutIntigerXY(u8 x, u8 y, int32_t num, int32_t radix);
 
 void RunTest1(void);
 void RunTest2(void);

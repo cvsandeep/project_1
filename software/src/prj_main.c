@@ -17,6 +17,7 @@ int main(void)
 
 	uint32_t sts;
 	u8 hue, sat, val;
+	u8 r_duty = 0, g_duty = 0, b_duty = 0;
 	bool detect;
 
 	sts = do_init();
@@ -80,6 +81,12 @@ int main(void)
 		sat = GetSat();
 		val = GetVal();
 		UpdateRGBled(hue, sat, val);
+		OLEDrgb_PutStringXY(1,1, "Hue:" );
+		OLEDrgb_PutIntigerXY(6, 1, hue , 10);
+		OLEDrgb_PutStringXY(1,1, "Sat:" );
+		OLEDrgb_PutIntigerXY(6, 1, sat , 10);
+		OLEDrgb_PutStringXY(1,1, "Val:" );
+		OLEDrgb_PutIntigerXY(6, 1, val , 10);
 		//UpdatePmodDispaly();
 
 		detect = GetDetectType(); // 0 - Sw Detect; 1- HW Detect
@@ -99,6 +106,7 @@ int main(void)
 			//UpdateSWDutyCycle();
 		}
 
+		DisplayDutycycle(r_duty, g_duty, b_duty);
 	}
 
 	// announce that we're done

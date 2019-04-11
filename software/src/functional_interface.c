@@ -175,6 +175,26 @@ bool IsExit(void)
 	return 1;
 }
 
+void DisplayDutycycle(u8 r_duty, u8 g_duty, u8 b_duty)
+{
+	NX410_SSEG_setAllDigits(2,r_duty/10, r_duty%10, 0, g_duty/10,0);
+	NX410_SSEG_setAllDigits(1, g_duty%10, 0, b_duty/10 , b_duty%10, 0);
+}
+
+void OLEDrgb_PutStringXY(u8 x, u8 y, char* s)
+{
+	OLEDrgb_SetCursor(&pmodOLEDrgb_inst, x, y);
+	OLEDrgb_PutString(&pmodOLEDrgb_inst, s);
+}
+
+void OLEDrgb_PutIntigerXY(u8 x, u8 y, int32_t num, int32_t radix)
+{
+	char  buf[16];
+	OLEDrgb_SetCursor(&pmodOLEDrgb_inst, x, y);
+    PMDIO_itoa(num, buf, radix);
+	OLEDrgb_PutString(&pmodOLEDrgb_inst, buf);
+}
+
 /************************ TEST FUNCTIONS ************************************/
 
 /****************************************************************************/
