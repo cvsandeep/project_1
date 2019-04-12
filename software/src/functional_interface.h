@@ -8,8 +8,6 @@
 #ifndef SRC_FUNCTIONAL_INTERFACE_H_
 #define SRC_FUNCTIONAL_INTERFACE_H_
 
-u32 state, laststate;
-
 void UpdateRGBled(u8 hue, u8 sat, u8 val);
 u8 GetHue(void);
 u8 GetSat(void);

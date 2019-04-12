@@ -104,11 +104,11 @@ void UpdateRGBled(u8 hue, u8 sat, u8 val) {
 
 u8 GetHue(void)
 {
-	//u32 state;
-	static u32 Hue = 10;
-	//state = ENC_getState(&pmodENC_inst);
-	Hue += ENC_getRotation(state, laststate);
-	//laststate = state;
+	u32 state = ENC_getState(&pmodENC_inst);;
+	static u32 prev_state;
+	static u8 Hue = 10;
+	Hue += ENC_getRotation(state, prev_state);
+	prev_state = state;
 	return Hue;
 }
 
@@ -180,14 +180,18 @@ bool GetDetectType(void)
 
 bool IsExit(void)
 {
-	state = ENC_getState(&pmodENC_inst);
-	if (ENC_buttonPressed(state) && !ENC_buttonPressed(laststate))//only check on button posedge
+	u32 state = ENC_getState(&pmodENC_inst);
+	if (ENC_buttonPressed(state) )
 	{
+		usleep(5000); // Debounce delay
+		if (ENC_buttonPressed(state) )
 		return 0;
 	}
 
 	if (NX4IO_isPressed(BTNC))
 	{
+		usleep(5000); // Debounce delay
+		if (NX4IO_isPressed(BTNC))
 		return 0;
 	}
 
@@ -406,7 +410,7 @@ void RunTest3(void)
 *****************************************************************************/
 void RunTest4(void)
 {
-	//u32 state, laststate; //comparing current and previous state to detect edges on GPIO pins.
+	u32 state, laststate; //comparing current and previous state to detect edges on GPIO pins.
 	u32 ticks = 0, lastticks = 1;
 
 	// Set up the display output
