@@ -75,6 +75,8 @@ int main(void)
 	}
 
 	laststate = ENC_getState(&pmodENC_inst);
+	OLEDrgb_SetFontColor(&pmodOLEDrgb_inst ,OLEDrgb_BuildHSV(255,255,255));  // blue font
+
 	while ( IsExit() )
 	{
 		hue = GetHue();

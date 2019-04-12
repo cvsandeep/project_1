@@ -88,12 +88,14 @@ void UpdateRGBled(u8 hue, u8 sat, u8 val) {
       break;
    }
 
-   // For RGB1
+   // For RGB1 may be multiply by 8
    	NX4IO_RGBLED_setChnlEn(RGB1, true, true, true);
    	NX4IO_RGBLED_setDutyCycle(RGB1, R, G, B);
    	// For RGB2
    	NX4IO_RGBLED_setChnlEn(RGB2, true, true, true);
    	NX4IO_RGBLED_setDutyCycle(RGB2, R, G, B);
+
+   	OLEDrgb_DrawRectangle(&pmodOLEDrgb_inst ,50,0,95,103, OLEDrgb_BuildRGB(R, G, B) ,true, OLEDrgb_BuildHSV(255,255,255));
 
 }
 
