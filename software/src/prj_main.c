@@ -17,8 +17,9 @@ int main(void)
 
 	uint32_t sts;
 	u8 hue, sat, val;
-	u8 r_duty = 0, g_duty = 0, b_duty = 0;
+	u8 r_duty = 12, g_duty = 34, b_duty = 56;
 	bool detect;
+
 
 	sts = do_init();
 	if (XST_SUCCESS != sts)
@@ -33,9 +34,9 @@ int main(void)
 
 
 	// TEST 1 - Test the LD15..LD0 on the Nexys4
-	RunTest1();
+	//RunTest1();
 	// TEST 2 - Test RGB1 (LD16) and RGB2 (LD17) on the Nexys4
-	RunTest2();
+	//RunTest2();
 	// TEST 3 - test the seven segment display banks
 	RunTest3();
 	// TEST 4 - test the rotary encoder (PmodENC) and display (PmodOLEDrgb)
@@ -73,24 +74,25 @@ int main(void)
 			usleep(100 * 1000);
 		}
 	}
-
+	xil_printf("Starting Main Application\n");
 	laststate = ENC_getState(&pmodENC_inst);
 	OLEDrgb_SetFontColor(&pmodOLEDrgb_inst ,OLEDrgb_BuildHSV(255,255,255));  // blue font
-
 	while ( IsExit() )
 	{
+		//state = ENC_getState(&pmodENC_inst);
+		//hue += ENC_getRotation(state, laststate);
 		hue = GetHue();
 		sat = GetSat();
 		val = GetVal();
 		UpdateRGBled(hue, sat, val);
-		OLEDrgb_PutStringXY(1,1, "Hue:" );
-		OLEDrgb_PutIntigerXY(6, 1, hue , 10);
-		OLEDrgb_PutStringXY(1,1, "Sat:" );
-		OLEDrgb_PutIntigerXY(6, 1, sat , 10);
-		OLEDrgb_PutStringXY(1,1, "Val:" );
-		OLEDrgb_PutIntigerXY(6, 1, val , 10);
+		OLEDrgb_PutStringXY(0,1, "Hue:" );
+		OLEDrgb_PutIntigerXY(4, 1, hue , 10);
+		OLEDrgb_PutStringXY(0,3, "Sat:" );
+		OLEDrgb_PutIntigerXY(4, 3, sat , 10);
+		OLEDrgb_PutStringXY(0,5, "Val:" );
+		OLEDrgb_PutIntigerXY(4, 5, val , 10);
 		//UpdatePmodDispaly();
-
+		//xil_printf("Hue:%d  Sat:%d val:%d\n", hue, sat, val);
 		detect = GetDetectType(); // 0 - Sw Detect; 1- HW Detect
 
 		if(detect)
@@ -109,11 +111,13 @@ int main(void)
 		}
 
 		DisplayDutycycle(r_duty, g_duty, b_duty);
+		laststate = state;
+		//usleep(1000);
 	}
 
 	// announce that we're done
 	xil_printf("\nThat's All Folks!\n\n");
-
+	OLEDrgb_Clear(&pmodOLEDrgb_inst);
 	OLEDrgb_SetCursor(&pmodOLEDrgb_inst, 4, 2);
 	OLEDrgb_SetFontColor(&pmodOLEDrgb_inst ,OLEDrgb_BuildRGB(0, 0, 255));  // blue font
 	OLEDrgb_PutString(&pmodOLEDrgb_inst,"BYE BYE");

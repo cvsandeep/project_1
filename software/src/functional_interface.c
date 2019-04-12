@@ -101,11 +101,10 @@ void UpdateRGBled(u8 hue, u8 sat, u8 val) {
 
 u8 GetHue(void)
 {
-	u32 state = ENC_getState(&pmodENC_inst);
-	static u8 Hue = 0;
-	//if (ENC_buttonPressed(state) && !ENC_buttonPressed(laststate))
-	Hue+= ENC_getRotation(state, laststate);
-	laststate = state;
+	//u32 state;
+	static u32 Hue = 10;
+	//state = ENC_getState(&pmodENC_inst);
+	Hue += ENC_getRotation(state, laststate);
 	return Hue;
 }
 
@@ -114,15 +113,23 @@ u8 GetSat(void)
 	static u8 Sat = 0;
 		if (NX4IO_isPressed(BTNL))
 		{
-			if (Sat == 255)
-				Sat = 0;
-			else
-				Sat++;
+			usleep(90000); // Debounce delay
+			if (NX4IO_isPressed(BTNL))
+			{
+				if (Sat == 255)
+					Sat = 0;
+				else
+					Sat++;
+			}
 		}
 		if (NX4IO_isPressed(BTNR))
 		{
-			if (Sat > 0)
-				Sat--;
+			usleep(90000); // Debounce delay
+			if (NX4IO_isPressed(BTNR))
+			{
+				if (Sat > 0)
+					Sat--;
+			}
 		}
 	return Sat;
 }
@@ -132,15 +139,23 @@ u8 GetVal(void)
 	static u8 Val = 0;
 	if (NX4IO_isPressed(BTNU))
 	{
-		if (Val == 255)
-			Val = 0;
-		else
-			Val++;
+		usleep(90000); // Debounce delay
+		if (NX4IO_isPressed(BTNU))
+		{
+			if (Val == 255)
+				Val = 0;
+			else
+				Val++;
+		}
 	}
 	if (NX4IO_isPressed(BTND))
 	{
-		if (Val > 0)
-			Val--;
+		usleep(90000); // Debounce delay
+		if (NX4IO_isPressed(BTND))
+		{
+			if (Val > 0)
+				Val--;
+		}
 	}
 	return Val;
 }
@@ -161,10 +176,10 @@ bool GetDetectType(void)
 
 bool IsExit(void)
 {
-	u32 state = ENC_getState(&pmodENC_inst);
+	state = ENC_getState(&pmodENC_inst);
 	if (ENC_buttonPressed(state) && !ENC_buttonPressed(laststate))//only check on button posedge
 	{
-		laststate = state;
+		//laststate = state;
 		return 0;
 	}
 
@@ -173,7 +188,7 @@ bool IsExit(void)
 		return 0;
 	}
 
-	laststate = state;
+	//laststate = state;
 	return 1;
 }
 
@@ -351,24 +366,8 @@ void RunTest3(void)
 *****************************************************************************/
 void RunTest4(void)
 {
-	u32 state, laststate; //comparing current and previous state to detect edges on GPIO pins.
-	int ticks = 0, lastticks = 1;
-	char s[] = " End Test 4 ";
-
-	xil_printf("Starting Test 4...The PmodOLEDrgb and PmodENC Test\n");
-	xil_printf("Turn PmodENC shaft.  Rotary Encoder count is displayed\n");
-	xil_printf("Press BTNUP to clear the count");
-	xil_printf("Press Rotary encoder shaft or BTNC to exit\n");
-
-	// turn off all of the decimal points
-	NX4IO_SSEG_setDecPt(SSEGHI, DIGIT7, false);
-	NX4IO_SSEG_setDecPt(SSEGHI, DIGIT6, false);
-	NX4IO_SSEG_setDecPt(SSEGHI, DIGIT5, false);
-	NX4IO_SSEG_setDecPt(SSEGHI, DIGIT4, false);
-	NX4IO_SSEG_setDecPt(SSEGLO, DIGIT3, false);
-	NX4IO_SSEG_setDecPt(SSEGLO, DIGIT2, false);
-	NX4IO_SSEG_setDecPt(SSEGLO, DIGIT1, false);
-	NX4IO_SSEG_setDecPt(SSEGLO, DIGIT0, false);
+	//u32 state, laststate; //comparing current and previous state to detect edges on GPIO pins.
+	u32 ticks = 0, lastticks = 1;
 
 	// Set up the display output
 	OLEDrgb_Clear(&pmodOLEDrgb_inst);
@@ -380,16 +379,16 @@ void RunTest4(void)
 
 	// get the previous state
 	laststate = ENC_getState(&pmodENC_inst);
-	while(1) {
+	while(IsExit()) {
 		// get the PmodENC state
 		state = ENC_getState(&pmodENC_inst);
 
 		// check if the rotary encoder pushbutton or BTNC is pressed
 		// exit the loop if either one is pressed.
-		if (ENC_buttonPressed(state) && !ENC_buttonPressed(laststate))//only check on button posedge
-		{
-			break;
-		}
+//		if (ENC_buttonPressed(state) && !ENC_buttonPressed(laststate))//only check on button posedge
+	//	{
+		//	break;
+	//	}
 
 		if (NX4IO_isPressed(BTNC))
 		{
@@ -398,17 +397,13 @@ void RunTest4(void)
 
 		// check BTNU and clear count if it's pressed
 		// update the count if it is not
-		if (NX4IO_isPressed(BTNU))
-		{
-			ticks = 0;
-		} 
-		else
-		{
+
 			// BTNU is not pressed so increment count
-			ticks += ENC_getRotation(state, laststate);
-		}
-		
-		
+		ticks = GetHue();
+		//xil_printf("ticks before:%d \n", ticks);
+		ticks += ENC_getRotation(state, laststate);
+		//xil_printf("ticks after:%d \n", ticks);
+
 		// update the display with the new count if the count has changed
 		if (ticks != lastticks) {
 			OLEDrgb_SetCursor(&pmodOLEDrgb_inst, 4, 1);
@@ -449,7 +444,7 @@ void RunTest4(void)
 	// Write one final string
 	OLEDrgb_Clear(&pmodOLEDrgb_inst);
 	OLEDrgb_SetCursor(&pmodOLEDrgb_inst, 0, 4);
-	OLEDrgb_PutString(&pmodOLEDrgb_inst, s);
+	//OLEDrgb_PutString(&pmodOLEDrgb_inst, s);
 
 	return;
 }
