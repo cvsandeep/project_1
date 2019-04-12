@@ -85,12 +85,7 @@ int main(void)
 		sat = GetSat();
 		val = GetVal();
 		UpdateRGBled(hue, sat, val);
-		OLEDrgb_PutStringXY(0,1, "Hue:" );
-		OLEDrgb_PutIntigerXY(4, 1, hue , 10);
-		OLEDrgb_PutStringXY(0,3, "Sat:" );
-		OLEDrgb_PutIntigerXY(4, 3, sat , 10);
-		OLEDrgb_PutStringXY(0,5, "Val:" );
-		OLEDrgb_PutIntigerXY(4, 5, val , 10);
+		UpdateDispaly(hue, sat, val);
 		//UpdatePmodDispaly();
 		//xil_printf("Hue:%d  Sat:%d val:%d\n", hue, sat, val);
 		detect = GetDetectType(); // 0 - Sw Detect; 1- HW Detect
@@ -99,14 +94,12 @@ int main(void)
 		{
 			//Hw Detect
 			microblaze_disable_interrupts();
-			//UpdateLed();
 			//UpdateHWDutyCycle();
 
 		} else
 		{
 			//SW Detect
 			microblaze_enable_interrupts();
-			//UpdateLed();
 			//UpdateSWDutyCycle();
 		}
 

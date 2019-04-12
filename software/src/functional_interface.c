@@ -59,44 +59,47 @@
 */
 
 void UpdateRGBled(u8 hue, u8 sat, u8 val) {
+   static u8 h = 0, s = 0, v = 0;
    u8 region, remain, p, q, t;
    u8 R, G, B;
-   region = hue / 43;
-   remain = (hue - (region * 43)) * 6;
-   p = (val * (255 - sat)) >> 8;
-   q = (val * (255 - ((sat * remain) >> 8))) >> 8;
-   t = (val * (255 - ((sat * (255 - remain)) >> 8))) >> 8;
+   if( h != hue || s != sat || v != val)
+   {
+	   region = hue / 43;
+	   remain = (hue - (region * 43)) * 6;
+	   p = (val * (255 - sat)) >> 8;
+	   q = (val * (255 - ((sat * remain) >> 8))) >> 8;
+	   t = (val * (255 - ((sat * (255 - remain)) >> 8))) >> 8;
 
-   switch (region) {
-   case 0:
-      R = val; G = t; B = p;
-      break;
-   case 1:
-      R = q; G = val; B = p;
-      break;
-   case 2:
-      R = p; G = val; B = t;
-      break;
-   case 3:
-      R = p; G = q; B = val;
-      break;
-   case 4:
-      R = t; G = p; B = val;
-      break;
-   default:
-      R = val; G = p; B = q;
-      break;
+	   switch (region) {
+	   case 0:
+		  R = val; G = t; B = p;
+		  break;
+	   case 1:
+		  R = q; G = val; B = p;
+		  break;
+	   case 2:
+		  R = p; G = val; B = t;
+		  break;
+	   case 3:
+		  R = p; G = q; B = val;
+		  break;
+	   case 4:
+		  R = t; G = p; B = val;
+		  break;
+	   default:
+		  R = val; G = p; B = q;
+		  break;
+	   }
+
+	   // For RGB1 may be multiply by 8
+		NX4IO_RGBLED_setChnlEn(RGB1, true, true, true);
+		NX4IO_RGBLED_setDutyCycle(RGB1, R, G, B);
+		// For RGB2
+		NX4IO_RGBLED_setChnlEn(RGB2, true, true, true);
+		NX4IO_RGBLED_setDutyCycle(RGB2, R, G, B);
+
+		h = hue; s = sat; v = val;
    }
-
-   // For RGB1 may be multiply by 8
-   	NX4IO_RGBLED_setChnlEn(RGB1, true, true, true);
-   	NX4IO_RGBLED_setDutyCycle(RGB1, R, G, B);
-   	// For RGB2
-   	NX4IO_RGBLED_setChnlEn(RGB2, true, true, true);
-   	NX4IO_RGBLED_setDutyCycle(RGB2, R, G, B);
-
-   	OLEDrgb_DrawRectangle(&pmodOLEDrgb_inst ,50,0,95,103, OLEDrgb_BuildRGB(R, G, B) ,true, OLEDrgb_BuildHSV(255,255,255));
-
 }
 
 u8 GetHue(void)
@@ -105,6 +108,7 @@ u8 GetHue(void)
 	static u32 Hue = 10;
 	//state = ENC_getState(&pmodENC_inst);
 	Hue += ENC_getRotation(state, laststate);
+	//laststate = state;
 	return Hue;
 }
 
@@ -179,7 +183,6 @@ bool IsExit(void)
 	state = ENC_getState(&pmodENC_inst);
 	if (ENC_buttonPressed(state) && !ENC_buttonPressed(laststate))//only check on button posedge
 	{
-		//laststate = state;
 		return 0;
 	}
 
@@ -188,14 +191,18 @@ bool IsExit(void)
 		return 0;
 	}
 
-	//laststate = state;
 	return 1;
 }
 
 void DisplayDutycycle(u8 r_duty, u8 g_duty, u8 b_duty)
 {
-	NX410_SSEG_setAllDigits(2,r_duty/10, r_duty%10, 0, g_duty/10,0);
-	NX410_SSEG_setAllDigits(1, g_duty%10, 0, b_duty/10 , b_duty%10, 0);
+	static u8 Rduty = 0, Gduty = 0, Bduty = 0;
+	if( Rduty != r_duty || Gduty != g_duty || Bduty != b_duty)
+	{
+		NX410_SSEG_setAllDigits(2,r_duty/10, r_duty%10, 0, g_duty/10,0);
+		NX410_SSEG_setAllDigits(1, g_duty%10, 0, b_duty/10 , b_duty%10, 0);
+		Rduty = r_duty; Gduty = g_duty; Bduty = b_duty;
+	}
 }
 
 void OLEDrgb_PutStringXY(u8 x, u8 y, char* s)
@@ -210,6 +217,39 @@ void OLEDrgb_PutIntigerXY(u8 x, u8 y, int32_t num, int32_t radix)
 	OLEDrgb_SetCursor(&pmodOLEDrgb_inst, x, y);
     PMDIO_itoa(num, buf, radix);
 	OLEDrgb_PutString(&pmodOLEDrgb_inst, buf);
+}
+
+void UpdateDispaly(u8 hue, u8 sat, u8 val)
+{
+	static u8 h = 0, s = 0, v = 0;
+
+    if(h != hue)
+    {
+    	OLEDrgb_PutStringXY(0,1, "Hue:" );
+    	OLEDrgb_PutIntigerXY(4, 1, hue , 10);
+    	h = hue;
+    }
+
+    if(s != sat)
+	{
+    	OLEDrgb_PutStringXY(0,3, "Sat:" );
+    	OLEDrgb_PutIntigerXY(4, 3, sat , 10);
+		s = sat;
+	}
+
+    if(v != val)
+	{
+    	OLEDrgb_PutStringXY(0,5, "Val:" );
+    	OLEDrgb_PutIntigerXY(4, 5, val , 10);
+		v = val;
+	}
+
+    if( h != hue || s != sat || v != val)
+    {
+    	OLEDrgb_DrawRectangle(&pmodOLEDrgb_inst ,50,0,95,103, OLEDrgb_BuildHSV(h,s,v) ,true, OLEDrgb_BuildHSV(h,s,v));
+    	h = hue; s = sat; v = val;
+    }
+
 }
 
 /************************ TEST FUNCTIONS ************************************/
