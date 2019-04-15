@@ -79,7 +79,9 @@ wire 				pmodoledrgb_out_pin10_i, pmodoledrgb_out_pin10_io, pmodoledrgb_out_pin1
 
 // RGB LED 
 wire                w_RGB1_Red, w_RGB1_Blue, w_RGB1_Green;
-
+wire    [31:0]      wire_highcount_r, wire_highcount_g, wire_highcount_b;
+wire    [31:0]      wire_lowcount_r, wire_lowcount_g, wire_lowcount_b;
+wire                w_clk_pwm_detect;
 // LED pins 
 wire    [15:0]      led_int;                // Nexys4IO drives these outputs
 
@@ -132,7 +134,7 @@ assign Pmod_out_0_pin9_io = JD[6];
 assign Pmod_out_0_pin10_io = JD[7];
 
 // instantiate the embedded system
-proj_1 EMBSYS
+design_1 EMBSYS
        (// PMOD OLED pins 
         .PmodOLEDrgb_out_0_pin10_i(pmodoledrgb_out_pin10_i),
 	    .PmodOLEDrgb_out_0_pin10_o(pmodoledrgb_out_pin10_o),
@@ -161,6 +163,13 @@ proj_1 EMBSYS
 	    // GPIO pins 
         .gpio_rtl_0_tri_i(gpio_in),
         .gpio_rtl_1_tri_o(gpio_out),
+        .gpio_rtl_highcount_r_tri_i(wire_highcount_r),
+        .gpio_rtl_highcount_g_tri_i(wire_highcount_g),
+        .gpio_rtl_highcount_b_tri_i(wire_highcount_b),
+        .gpio_rtl_lowcount_r_tri_i(wire_lowcount_r),
+        .gpio_rtl_lowcount_g_tri_i(wire_lowcount_g),
+        .gpio_rtl_lowcount_b_tri_i(wire_lowcount_b),
+        .clk_pwm_detect(w_clk_pwm_detect),
         // Pmod Rotary Encoder
 	    .Pmod_out_0_pin10_i(Pmod_out_0_pin10_i),
         .Pmod_out_0_pin10_o(Pmod_out_0_pin10_o),
@@ -330,5 +339,29 @@ IOBUF Pmod_out_0_pin10_iobuf
           .O(Pmod_out_0_pin10_i),
           .T(Pmod_out_0_pin10_t));
 
+pwm_detector r_duty_cycle (
+    .clk(w_clk_pwm_detect),
+    .reset(sysreset),
+    .pwm_signal(w_RGB1_Red),
+    .high_count(wire_highcount_r),
+    .low_count(wire_lowcount_r)
+    );
+
+pwm_detector g_duty_cycle (
+    .clk(w_clk_pwm_detect),
+    .reset(sysreset),
+    .pwm_signal(w_RGB1_Green),
+    .high_count(wire_highcount_g),
+    .low_count(wire_lowcount_g)
+    );
+ 
+ pwm_detector b_duty_cycle (
+        .clk(w_clk_pwm_detect),
+        .reset(sysreset),
+        .pwm_signal(w_RGB1_Blue),
+        .high_count(wire_highcount_b),
+        .low_count(wire_lowcount_b)
+        );
+    
 endmodule
 
