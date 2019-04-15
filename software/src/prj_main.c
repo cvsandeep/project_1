@@ -27,7 +27,7 @@ int main(void)
 		exit(1);
 	}
 
-	microblaze_enable_interrupts();
+	//microblaze_enable_interrupts();
 
 	xil_printf("ECE 544 Getting Started Application\n\r");
 	xil_printf("By Roy Kravitz. 05-April-2018\n\n\r");
@@ -179,6 +179,8 @@ void FIT_Handler(void)
 		{
 			low_level[color]++;
 		}
+		old_signal[color] = signal[color];
+		xil_printf("signal%d: %d \n", color, signal[color]);
 
 	}
 }

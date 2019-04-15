@@ -227,29 +227,14 @@ void UpdateDispaly(u8 hue, u8 sat, u8 val)
 {
 	static u8 h = 0, s = 0, v = 0;
 
-    if(h != hue)
+    if( h != hue || s != sat || v != val)
     {
     	OLEDrgb_PutStringXY(0,1, "Hue:" );
     	OLEDrgb_PutIntigerXY(4, 1, hue , 10);
-    	h = hue;
-    }
-
-    if(s != sat)
-	{
     	OLEDrgb_PutStringXY(0,3, "Sat:" );
     	OLEDrgb_PutIntigerXY(4, 3, sat , 10);
-		s = sat;
-	}
-
-    if(v != val)
-	{
     	OLEDrgb_PutStringXY(0,5, "Val:" );
     	OLEDrgb_PutIntigerXY(4, 5, val , 10);
-		v = val;
-	}
-
-    if( h != hue || s != sat || v != val)
-    {
     	OLEDrgb_DrawRectangle(&pmodOLEDrgb_inst ,50,0,95,103, OLEDrgb_BuildHSV(h,s,v) ,true, OLEDrgb_BuildHSV(h,s,v));
     	h = hue; s = sat; v = val;
     }
