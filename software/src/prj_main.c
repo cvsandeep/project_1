@@ -9,7 +9,7 @@
 #include "functional_interface.h"
 
 uint64_t 	timestamp = 0L;
-volatile u8 duty_cycle[3];
+volatile u8 duty_cycle[3] = {1,2,3};
 
 /************************** MAIN PROGRAM ************************************/
 int main(void)
@@ -75,7 +75,7 @@ int main(void)
 		}
 	}
 	xil_printf("Starting Main Application\n");
-
+	NX4IO_setLEDs(0x00);
 	OLEDrgb_SetFontColor(&pmodOLEDrgb_inst ,OLEDrgb_BuildHSV(255,255,255));  // blue font
 	while ( IsExit() )
 	{
@@ -95,6 +95,15 @@ int main(void)
 			//Hw Detect
 			microblaze_disable_interrupts();
 			//UpdateHWDutyCycle();
+			duty_cycle[0] = XGpio_DiscreteRead(&GPIOInstR, GPIO_R_INPUT_LOW_CHANNEL);
+		    duty_cycle[0] = (duty_cycle[0] * 100)/(duty_cycle[0] + XGpio_DiscreteRead(&GPIOInstR, GPIO_R_INPUT_HIGH_CHANNEL));
+
+		    duty_cycle[1] = XGpio_DiscreteRead(&GPIOInstR, GPIO_G_INPUT_LOW_CHANNEL);
+		    duty_cycle[1] = (duty_cycle[1] * 100)/(duty_cycle[1] + XGpio_DiscreteRead(&GPIOInstR, GPIO_G_INPUT_HIGH_CHANNEL));
+
+		    duty_cycle[2] = XGpio_DiscreteRead(&GPIOInstR, GPIO_B_INPUT_LOW_CHANNEL);
+		    duty_cycle[2] = (duty_cycle[2] * 100)/(duty_cycle[2] + XGpio_DiscreteRead(&GPIOInstR, GPIO_B_INPUT_HIGH_CHANNEL));
+
 
 		} else
 		{
@@ -102,6 +111,7 @@ int main(void)
 			microblaze_enable_interrupts();
 			//UpdateSWDutyCycle();
 		}
+		//NX4IO_setLEDs(XGpio_DiscreteRead(&GPIOInst0, GPIO_0_INPUT_0_CHANNEL));
 
 		DisplayDutycycle(duty_cycle[0], duty_cycle[1], duty_cycle[2]);
 		//usleep(1000);
@@ -180,7 +190,7 @@ void FIT_Handler(void)
 			low_level[color]++;
 		}
 		old_signal[color] = signal[color];
-		xil_printf("signal%d: %d \n", color, signal[color]);
+		//xil_printf("signal%d: %d \n", color, signal[color]);
 
 	}
 }

@@ -46,11 +46,38 @@ int	 do_init(void)
 	{
 		return XST_FAILURE;
 	}
+
+	status = XGpio_Initialize(&GPIOInstR, GPIO_R_DEVICE_ID);
+	if (status != XST_SUCCESS)
+	{
+		return XST_FAILURE;
+	}
+
+	status = XGpio_Initialize(&GPIOInstG, GPIO_G_DEVICE_ID);
+	if (status != XST_SUCCESS)
+	{
+		return XST_FAILURE;
+	}
+
+	status = XGpio_Initialize(&GPIOInstB, GPIO_B_DEVICE_ID);
+	if (status != XST_SUCCESS)
+	{
+		return XST_FAILURE;
+	}
+
 	// GPIO0 channel 1 is an 8-bit input port.
 	// GPIO0 channel 2 is an 8-bit output port.
 	XGpio_SetDataDirection(&GPIOInst0, GPIO_0_INPUT_0_CHANNEL, 0xFF);
 	XGpio_SetDataDirection(&GPIOInst0, GPIO_0_OUTPUT_0_CHANNEL, 0x00);
 
+	XGpio_SetDataDirection(&GPIOInstR, GPIO_R_INPUT_HIGH_CHANNEL, 0xFFFFFFFF);
+	XGpio_SetDataDirection(&GPIOInstR, GPIO_R_INPUT_LOW_CHANNEL, 0xFFFFFFFF);
+
+	XGpio_SetDataDirection(&GPIOInstG, GPIO_G_INPUT_HIGH_CHANNEL, 0xFFFFFFFF);
+	XGpio_SetDataDirection(&GPIOInstG, GPIO_G_INPUT_LOW_CHANNEL, 0xFFFFFFFF);
+
+	XGpio_SetDataDirection(&GPIOInstB, GPIO_B_INPUT_HIGH_CHANNEL, 0xFFFFFFFF);
+	XGpio_SetDataDirection(&GPIOInstB, GPIO_B_INPUT_LOW_CHANNEL, 0xFFFFFFFF);
 
 	status = AXI_Timer_initialize();
 	if (status != XST_SUCCESS)

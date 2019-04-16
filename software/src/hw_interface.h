@@ -64,6 +64,18 @@
 #define GPIO_0_INPUT_0_CHANNEL		1
 #define GPIO_0_OUTPUT_0_CHANNEL		2
 
+#define GPIO_R_DEVICE_ID			XPAR_AXI_GPIO_1_DEVICE_ID
+#define GPIO_R_INPUT_HIGH_CHANNEL		1
+#define GPIO_R_INPUT_LOW_CHANNEL		2
+
+#define GPIO_G_DEVICE_ID			XPAR_AXI_GPIO_2_DEVICE_ID
+#define GPIO_G_INPUT_HIGH_CHANNEL		1
+#define GPIO_G_INPUT_LOW_CHANNEL		2
+
+#define GPIO_B_DEVICE_ID			XPAR_AXI_GPIO_3_DEVICE_ID
+#define GPIO_B_INPUT_HIGH_CHANNEL		1
+#define GPIO_B_INPUT_LOW_CHANNEL		2
+
 // Interrupt Controller parameters
 #define INTC_DEVICE_ID			XPAR_INTC_0_DEVICE_ID
 #define FIT_INTERRUPT_ID		XPAR_MICROBLAZE_0_AXI_INTC_FIT_TIMER_0_INTERRUPT_INTR
@@ -77,6 +89,7 @@
 PmodOLEDrgb	pmodOLEDrgb_inst;
 PmodENC 	pmodENC_inst;
 XGpio		GPIOInst0;					// GPIO instance
+XGpio		GPIOInstR, GPIOInstG , GPIOInstB;
 XIntc 		IntrptCtlrInst;				// Interrupt Controller instance
 XTmrCtr		AXITimerInst;				// PWM timer instance
 
