@@ -95,15 +95,9 @@ int main(void)
 			//Hw Detect
 			microblaze_disable_interrupts();
 			//UpdateHWDutyCycle();
-			duty_cycle[0] = XGpio_DiscreteRead(&GPIOInstR, GPIO_R_INPUT_LOW_CHANNEL);
-		    duty_cycle[0] = (duty_cycle[0] * 100)/(duty_cycle[0] + XGpio_DiscreteRead(&GPIOInstR, GPIO_R_INPUT_HIGH_CHANNEL));
-
-		    duty_cycle[1] = XGpio_DiscreteRead(&GPIOInstR, GPIO_G_INPUT_LOW_CHANNEL);
-		    duty_cycle[1] = (duty_cycle[1] * 100)/(duty_cycle[1] + XGpio_DiscreteRead(&GPIOInstR, GPIO_G_INPUT_HIGH_CHANNEL));
-
-		    duty_cycle[2] = XGpio_DiscreteRead(&GPIOInstR, GPIO_B_INPUT_LOW_CHANNEL);
-		    duty_cycle[2] = (duty_cycle[2] * 100)/(duty_cycle[2] + XGpio_DiscreteRead(&GPIOInstR, GPIO_B_INPUT_HIGH_CHANNEL));
-
+		    duty_cycle[0] = calc_duty(XGpio_DiscreteRead(&GPIOInstR, GPIO_R_INPUT_HIGH_CHANNEL), XGpio_DiscreteRead(&GPIOInstR, GPIO_R_INPUT_LOW_CHANNEL));
+		    duty_cycle[1] = calc_duty(XGpio_DiscreteRead(&GPIOInstR, GPIO_G_INPUT_HIGH_CHANNEL), XGpio_DiscreteRead(&GPIOInstR, GPIO_G_INPUT_LOW_CHANNEL));
+		    duty_cycle[2] = calc_duty(XGpio_DiscreteRead(&GPIOInstR, GPIO_B_INPUT_HIGH_CHANNEL), XGpio_DiscreteRead(&GPIOInstR, GPIO_B_INPUT_LOW_CHANNEL));
 
 		} else
 		{
@@ -174,7 +168,7 @@ void FIT_Handler(void)
 	{
 		if(!old_signal[color] && signal[color]) //detect_rising_edge(signal);
 		{
-			duty_cycle[color] = (high_level[color]*100)/(high_level[color]+low_level[color]);
+			duty_cycle[color] = calc_duty(high_level[color], low_level[color]);
 			high_level[color] = 1;
 		}
 		else if(old_signal[color] && !signal[color]) //detect_failing_edge(signal);
