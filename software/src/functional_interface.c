@@ -115,7 +115,7 @@ u8 GetHue(void)
 u8 GetSat(void)
 {
 	static u8 Sat = 0;
-		if (NX4IO_isPressed(BTNL))
+		if (NX4IO_isPressed(BTNR))
 		{
 			usleep(90000); // Debounce delay
 			if (NX4IO_isPressed(BTNL))
@@ -126,7 +126,7 @@ u8 GetSat(void)
 					Sat++;
 			}
 		}
-		if (NX4IO_isPressed(BTNR))
+		if (NX4IO_isPressed(BTNL))
 		{
 			usleep(90000); // Debounce delay
 			if (NX4IO_isPressed(BTNR))
@@ -240,6 +240,20 @@ void UpdateDispaly(u8 hue, u8 sat, u8 val)
     }
 
 }
+
+u8 calc_duty(u32 high, u32 low)
+{
+	u32 sum;
+	u8 duty;
+
+	sum = (high + 1) + (low + 1);
+	duty = (100 * (high + 1)) / sum;
+
+	if(duty < 0) duty = 0;
+	if(duty > 99) duty = 99;
+
+	return duty;
+};
 
 /************************ TEST FUNCTIONS ************************************/
 
