@@ -17,7 +17,7 @@ int main(void)
     init_platform();
 
 	uint32_t sts;
-	u8 hue, sat, val;
+	u16 hue, sat, val;
 	bool detect;
 
 
@@ -38,9 +38,9 @@ int main(void)
 	// TEST 2 - Test RGB1 (LD16) and RGB2 (LD17) on the Nexys4
 	//RunTest2();
 	// TEST 3 - test the seven segment display banks
-	RunTest3();
+	//RunTest3();
 	// TEST 4 - test the rotary encoder (PmodENC) and display (PmodOLEDrgb)
-	RunTest4();
+	//RunTest4();
 
 	// TEST 5 - test the switches and pushbuttons
 	// We will do this in a busy-wait loop
@@ -75,6 +75,9 @@ int main(void)
 		}
 	}
 	xil_printf("Starting Main Application\n");
+	duty_cycle[0] = 0;
+	duty_cycle[1] = 0;
+	duty_cycle[2] = 0;
 	NX4IO_setLEDs(0x00);
 	OLEDrgb_SetFontColor(&pmodOLEDrgb_inst ,OLEDrgb_BuildHSV(255,255,255));  // blue font
 	while ( IsExit() )
@@ -95,9 +98,12 @@ int main(void)
 			//Hw Detect
 			microblaze_disable_interrupts();
 			//UpdateHWDutyCycle();
+			//xil_printf("Getting Red from HW\n");
 		    duty_cycle[0] = calc_duty(XGpio_DiscreteRead(&GPIOInstR, GPIO_R_INPUT_HIGH_CHANNEL), XGpio_DiscreteRead(&GPIOInstR, GPIO_R_INPUT_LOW_CHANNEL));
-		    duty_cycle[1] = calc_duty(XGpio_DiscreteRead(&GPIOInstR, GPIO_G_INPUT_HIGH_CHANNEL), XGpio_DiscreteRead(&GPIOInstR, GPIO_G_INPUT_LOW_CHANNEL));
-		    duty_cycle[2] = calc_duty(XGpio_DiscreteRead(&GPIOInstR, GPIO_B_INPUT_HIGH_CHANNEL), XGpio_DiscreteRead(&GPIOInstR, GPIO_B_INPUT_LOW_CHANNEL));
+		    //xil_printf("Getting Green from HW\n");
+		    duty_cycle[1] = calc_duty(XGpio_DiscreteRead(&GPIOInstG, GPIO_G_INPUT_HIGH_CHANNEL), XGpio_DiscreteRead(&GPIOInstG, GPIO_G_INPUT_LOW_CHANNEL));
+		    //xil_printf("Getting Blue from HW\n");
+		    duty_cycle[2] = calc_duty(XGpio_DiscreteRead(&GPIOInstB, GPIO_B_INPUT_HIGH_CHANNEL), XGpio_DiscreteRead(&GPIOInstB, GPIO_B_INPUT_LOW_CHANNEL));
 
 		} else
 		{
@@ -151,8 +157,10 @@ int main(void)
 volatile bool signal[3];
 volatile bool old_signal[3];
 volatile u8 type = 0;
-volatile u8 high_level[3];
-volatile u8 low_level[3];
+volatile u32 high_level[3];
+volatile u32 low_level[3];
+volatile u8 high_count[3];
+volatile u8 low_count[3];
 
 void FIT_Handler(void)
 {

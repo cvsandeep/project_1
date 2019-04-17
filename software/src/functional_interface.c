@@ -58,6 +58,75 @@
 **      Converts an HSV value into a 565 RGB color and updates the RGB LED
 */
 
+void UpdateRGBled(u8 hue, u8 sat, u8 val)
+{
+    double      hh, p, q, t, ff;
+    long        i;
+    u8 R, G, B;
+    float S = sat/100.0;
+    float V = val/100.0;
+    hh = hue;
+    if(hh >= 360.0) hh = 0.0;
+    hh /= 60.0;
+    i = (long)hh;
+    ff = hh - i;
+    p = V * (1.0 - S);
+    q = V * (1.0 - (S * ff));
+    t = V * (1.0 - (S * (1.0 - ff)));
+
+    switch(i) {
+    case 0:
+        R = V * 255;
+        G = t * 255;
+        B = p * 255;
+        break;
+    case 1:
+        R = q * 255;
+        G = V * 255;
+        B = p * 255;
+        break;
+    case 2:
+        R = p * 255;
+        G = V * 255;
+        B = t * 255;
+        break;
+
+    case 3:
+        R = p * 255;
+        G = q * 255;
+        B = V * 255;
+        break;
+    case 4:
+        R = t * 255;
+        G = p * 255;
+        B = V * 255;
+        break;
+    case 5:
+    default:
+        R = V * 255;
+        G = p * 255;
+        B = q * 255;
+        break;
+    }
+    xil_printf("LED's R=%d,G=%d,B=%d\n", R, G, B);
+
+    OLEDrgb_PutStringXY(0,7, "R");
+    	   OLEDrgb_PutIntigerXY(1, 7, R , 10);
+    	   OLEDrgb_PutStringXY(4,7, "G");
+    	   OLEDrgb_PutIntigerXY(5, 7, G , 10);
+    	   OLEDrgb_PutStringXY(8,7, "B");
+    	   OLEDrgb_PutIntigerXY(9, 7, B , 10);
+    	   // For RGB1 may be multiply by 8
+    		NX4IO_RGBLED_setChnlEn(RGB1, true, true, true);
+    		NX4IO_RGBLED_setDutyCycle(RGB1, R, G, B);
+    		// For RGB2
+    		NX4IO_RGBLED_setChnlEn(RGB2, true, true, true);
+    		NX4IO_RGBLED_setDutyCycle(RGB2, R, G, B);
+    		OLEDrgb_DrawRectangle(&pmodOLEDrgb_inst ,50,0,95,103, 0 ,true, OLEDrgb_BuildRGB(R, G, B));
+    		//h = hue; s = sat; v = val;
+
+}
+#if 0
 void UpdateRGBled(u8 hue, u8 sat, u8 val) {
    static u8 h = 0, s = 0, v = 0;
    u8 region, remain, p, q, t;
@@ -90,23 +159,31 @@ void UpdateRGBled(u8 hue, u8 sat, u8 val) {
 		  R = val; G = p; B = q;
 		  break;
 	   }
-
+	   R = (R*255)/100; G = (G*255)/100; B = (B*255)/100;
+	   xil_printf("LED's R=%d,G=%d,B=%d\n", R, G, B);
+	   OLEDrgb_PutStringXY(0,7, "R");
+	   OLEDrgb_PutIntigerXY(1, 7, R , 10);
+	   OLEDrgb_PutStringXY(4,7, "G");
+	   OLEDrgb_PutIntigerXY(5, 7, G , 10);
+	   OLEDrgb_PutStringXY(8,7, "B");
+	   OLEDrgb_PutIntigerXY(9, 7, B , 10);
 	   // For RGB1 may be multiply by 8
 		NX4IO_RGBLED_setChnlEn(RGB1, true, true, true);
 		NX4IO_RGBLED_setDutyCycle(RGB1, R, G, B);
 		// For RGB2
 		NX4IO_RGBLED_setChnlEn(RGB2, true, true, true);
 		NX4IO_RGBLED_setDutyCycle(RGB2, R, G, B);
-
+		OLEDrgb_DrawRectangle(&pmodOLEDrgb_inst ,50,0,95,103, 0 ,true, OLEDrgb_BuildRGB(R, G, B));
 		h = hue; s = sat; v = val;
    }
 }
+#endif
 
-u8 GetHue(void)
+u16 GetHue(void)
 {
 	u32 state = ENC_getState(&pmodENC_inst);;
 	static u32 prev_state;
-	static u8 Hue = 10;
+	static u16 Hue = 240;
 	Hue += ENC_getRotation(state, prev_state);
 	prev_state = state;
 	return Hue;
@@ -118,9 +195,9 @@ u8 GetSat(void)
 		if (NX4IO_isPressed(BTNR))
 		{
 			usleep(90000); // Debounce delay
-			if (NX4IO_isPressed(BTNL))
+			if (NX4IO_isPressed(BTNR))
 			{
-				if (Sat == 255)
+				if (Sat == 100)
 					Sat = 0;
 				else
 					Sat++;
@@ -129,10 +206,12 @@ u8 GetSat(void)
 		if (NX4IO_isPressed(BTNL))
 		{
 			usleep(90000); // Debounce delay
-			if (NX4IO_isPressed(BTNR))
+			if (NX4IO_isPressed(BTNL))
 			{
 				if (Sat > 0)
 					Sat--;
+				if(Sat == 0 )
+					Sat = 100;
 			}
 		}
 	return Sat;
@@ -146,7 +225,7 @@ u8 GetVal(void)
 		usleep(90000); // Debounce delay
 		if (NX4IO_isPressed(BTNU))
 		{
-			if (Val == 255)
+			if (Val == 100)
 				Val = 0;
 			else
 				Val++;
@@ -159,6 +238,8 @@ u8 GetVal(void)
 		{
 			if (Val > 0)
 				Val--;
+			if (Val  == 0)
+				Val = 100;
 		}
 	}
 	return Val;
@@ -169,11 +250,13 @@ bool GetDetectType(void)
 	u32 leds_data = NX4IO_getLEDS_DATA();
 	if((NX4IO_getSwitches() & 0x001) == 1 )
 	{
-		NX4IO_setLEDs(leds_data | (1UL << 2));
+		//NX4IO_setLEDs(leds_data | (1UL << 0));
+		//OLEDrgb_PutStringXY(7,7, "HW" );
 		return true;
 	} else
 	{
-		NX4IO_setLEDs(leds_data & ~(1UL << 2));
+		//NX4IO_setLEDs(leds_data & ~(1UL << 0));
+		//OLEDrgb_PutStringXY(7,7, "SW" );
 		return false;
 	}
 }
@@ -185,7 +268,7 @@ bool IsExit(void)
 	{
 		usleep(5000); // Debounce delay
 		if (ENC_buttonPressed(state) )
-		return 0;
+		;//return 0;
 	}
 
 	if (NX4IO_isPressed(BTNC))
@@ -200,7 +283,7 @@ bool IsExit(void)
 
 void DisplayDutycycle(u8 r_duty, u8 g_duty, u8 b_duty)
 {
-	static u8 Rduty = 0, Gduty = 0, Bduty = 0;
+	static u8 Rduty = 1, Gduty = 0, Bduty = 0;
 	if( Rduty != r_duty || Gduty != g_duty || Bduty != b_duty)
 	{
 		NX410_SSEG_setAllDigits(2,r_duty/10, r_duty%10, 0, g_duty/10,0);
@@ -235,7 +318,7 @@ void UpdateDispaly(u8 hue, u8 sat, u8 val)
     	OLEDrgb_PutIntigerXY(4, 3, sat , 10);
     	OLEDrgb_PutStringXY(0,5, "Val:" );
     	OLEDrgb_PutIntigerXY(4, 5, val , 10);
-    	OLEDrgb_DrawRectangle(&pmodOLEDrgb_inst ,50,0,95,103, OLEDrgb_BuildHSV(h,s,v) ,true, OLEDrgb_BuildHSV(h,s,v));
+    	//OLEDrgb_DrawRectangle(&pmodOLEDrgb_inst ,50,0,95,103, OLEDrgb_BuildHSV(h,s,v) ,true, OLEDrgb_BuildHSV(h,s,v));
     	h = hue; s = sat; v = val;
     }
 
@@ -243,16 +326,24 @@ void UpdateDispaly(u8 hue, u8 sat, u8 val)
 
 u8 calc_duty(u32 high, u32 low)
 {
+	static u32 h=1,l=1;
 	u32 sum;
-	u8 duty;
+	static u8 duty;
+	if( h != high || l != low )
+	{
+		//xil_printf("High count= %d, low count = %d\n", high, low);
+		 h = high; l = low;
 
-	sum = (high + 1) + (low + 1);
-	duty = (100 * (high + 1)) / sum;
+		sum = (high + 1) + (low + 1);
+		duty = (100 * (high + 1)) / sum;
+        duty = duty * 2;
+		if(duty < 0) duty = 0;
+		if(duty > 99) duty = 99;
 
-	if(duty < 0) duty = 0;
-	if(duty > 99) duty = 99;
-
+		return duty;
+	}
 	return duty;
+
 };
 
 /************************ TEST FUNCTIONS ************************************/

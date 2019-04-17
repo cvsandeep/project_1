@@ -9,7 +9,7 @@
 #define SRC_FUNCTIONAL_INTERFACE_H_
 
 void UpdateRGBled(u8 hue, u8 sat, u8 val);
-u8 GetHue(void);
+u16 GetHue(void);
 u8 GetSat(void);
 u8 GetVal(void);
 bool GetDetectType(void);
