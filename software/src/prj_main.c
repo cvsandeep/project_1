@@ -17,7 +17,8 @@ int main(void)
     init_platform();
 
 	uint32_t sts;
-	u16 hue, sat, val;
+	u16 hue;
+	u8 sat, val;
 	bool detect;
 
 
@@ -29,51 +30,6 @@ int main(void)
 
 	//microblaze_enable_interrupts();
 
-	xil_printf("ECE 544 Getting Started Application\n\r");
-	xil_printf("By Roy Kravitz. 05-April-2018\n\n\r");
-
-
-	// TEST 1 - Test the LD15..LD0 on the Nexys4
-	//RunTest1();
-	// TEST 2 - Test RGB1 (LD16) and RGB2 (LD17) on the Nexys4
-	//RunTest2();
-	// TEST 3 - test the seven segment display banks
-	//RunTest3();
-	// TEST 4 - test the rotary encoder (PmodENC) and display (PmodOLEDrgb)
-	//RunTest4();
-
-	// TEST 5 - test the switches and pushbuttons
-	// We will do this in a busy-wait loop
-	// pressing BTN_C (the center button will
-	// cause the loop to terminate
-	timestamp = 0;
-
-	xil_printf("Starting Test 5...the buttons and switch test\n");
-	xil_printf("Press the center pushbutton to exit\n");
-
-	// blank the display digits and turn off the decimal points
-	NX410_SSEG_setAllDigits(SSEGLO, CC_BLANK, CC_BLANK, CC_BLANK, CC_BLANK, DP_NONE);
-	NX410_SSEG_setAllDigits(SSEGHI, CC_BLANK, CC_BLANK, CC_BLANK, CC_BLANK, DP_NONE);
-	// loop the test until the user presses the center button
-	while (0)
-	{
-		// Run an iteration of the test
-		RunTest5();
-		// check whether the center button is pressed.  If it is then
-		// exit the loop.
-		if (NX4IO_isPressed(BTNC))
-		{
-			// show the timestamp on the seven segment display and quit the loop
-			NX4IO_SSEG_putU32Dec((uint32_t) timestamp, true);
-			break;
-		}
-		else
-		{
-			// increment the timestamp and delay 100 msecs
-			timestamp += 100;
-			usleep(100 * 1000);
-		}
-	}
 	xil_printf("Starting Main Application\n");
 	duty_cycle[0] = 0;
 	duty_cycle[1] = 0;
@@ -87,7 +43,7 @@ int main(void)
 		hue = GetHue();
 		sat = GetSat();
 		val = GetVal();
-		UpdateRGBled(hue, sat, val);
+		UpdateRGBled(hue, sat, val, 0);
 		UpdateDispaly(hue, sat, val);
 		//UpdatePmodDispaly();
 		//xil_printf("Hue:%d  Sat:%d val:%d\n", hue, sat, val);
@@ -119,6 +75,9 @@ int main(void)
 
 	// announce that we're done
 	xil_printf("\nThat's All Folks!\n\n");
+	NX4IO_setLEDs(0x00);
+	NX4IO_RGBLED_setChnlEn(RGB1, false, false, false);
+	NX4IO_RGBLED_setChnlEn(RGB2, false, false, false);
 	OLEDrgb_Clear(&pmodOLEDrgb_inst);
 	OLEDrgb_SetCursor(&pmodOLEDrgb_inst, 4, 2);
 	OLEDrgb_SetFontColor(&pmodOLEDrgb_inst ,OLEDrgb_BuildRGB(0, 0, 255));  // blue font
@@ -186,10 +145,16 @@ void FIT_Handler(void)
 		else if(old_signal[color] && signal[color])
 		{
 			high_level[color]++;
+			if(high_level[color] == 10000)
+				duty_cycle[color] = 99;
+
 		}
 		else if(!old_signal[color] && !signal[color])
 		{
 			low_level[color]++;
+			//xil_printf("signal%d: %d low_level:%d\n", color, signal[color], low_level[color]);
+			if(low_level[color] == 10000)
+				duty_cycle[color] = 0;
 		}
 		old_signal[color] = signal[color];
 		//xil_printf("signal%d: %d \n", color, signal[color]);

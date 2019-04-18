@@ -57,7 +57,7 @@
 **   Description:
 **      Converts an HSV value into a 565 RGB color and updates the RGB LED
 */
-
+#if 0
 void UpdateRGBled(u8 hue, u8 sat, u8 val)
 {
     double      hh, p, q, t, ff;
@@ -73,7 +73,6 @@ void UpdateRGBled(u8 hue, u8 sat, u8 val)
     p = V * (1.0 - S);
     q = V * (1.0 - (S * ff));
     t = V * (1.0 - (S * (1.0 - ff)));
-
     switch(i) {
     case 0:
         R = V * 255;
@@ -108,9 +107,10 @@ void UpdateRGBled(u8 hue, u8 sat, u8 val)
         B = q * 255;
         break;
     }
+
     xil_printf("LED's R=%d,G=%d,B=%d\n", R, G, B);
 
-    OLEDrgb_PutStringXY(0,7, "R");
+           OLEDrgb_PutStringXY(0,7, "R                    ");
     	   OLEDrgb_PutIntigerXY(1, 7, R , 10);
     	   OLEDrgb_PutStringXY(4,7, "G");
     	   OLEDrgb_PutIntigerXY(5, 7, G , 10);
@@ -126,19 +126,22 @@ void UpdateRGBled(u8 hue, u8 sat, u8 val)
     		//h = hue; s = sat; v = val;
 
 }
-#if 0
-void UpdateRGBled(u8 hue, u8 sat, u8 val) {
-   static u8 h = 0, s = 0, v = 0;
-   u8 region, remain, p, q, t;
-   u8 R, G, B;
-   if( h != hue || s != sat || v != val)
-   {
-	   region = hue / 43;
-	   remain = (hue - (region * 43)) * 6;
-	   p = (val * (255 - sat)) >> 8;
-	   q = (val * (255 - ((sat * remain) >> 8))) >> 8;
-	   t = (val * (255 - ((sat * (255 - remain)) >> 8))) >> 8;
+#endif
 
+void UpdateRGBled(u16 hue, u8 sat, u8 val, bool display) {
+   static u16 h = 0;
+   static u8 s = 0, v = 0;
+   u8 region, p, q, t;
+   float remain, S=sat/100.0, V = val/100.0;
+   u8 R, G, B;
+   if( h != hue || s != sat || v != val || display)
+   {
+	   region = hue / 60;
+	   remain = ( (hue/60.0) - region );
+	   p = V * (1.0 - S);
+	   q = V * (1.0 - (S * remain));
+	   t = V * (1.0 - (S * (1.0 - remain)));
+	   V = V*255; p=p*255; q=q*255; t=t*255;
 	   switch (region) {
 	   case 0:
 		  R = val; G = t; B = p;
@@ -160,31 +163,37 @@ void UpdateRGBled(u8 hue, u8 sat, u8 val) {
 		  break;
 	   }
 	   R = (R*255)/100; G = (G*255)/100; B = (B*255)/100;
-	   xil_printf("LED's R=%d,G=%d,B=%d\n", R, G, B);
-	   OLEDrgb_PutStringXY(0,7, "R");
-	   OLEDrgb_PutIntigerXY(1, 7, R , 10);
-	   OLEDrgb_PutStringXY(4,7, "G");
-	   OLEDrgb_PutIntigerXY(5, 7, G , 10);
-	   OLEDrgb_PutStringXY(8,7, "B");
-	   OLEDrgb_PutIntigerXY(9, 7, B , 10);
-	   // For RGB1 may be multiply by 8
+
+	   // For RGB1
 		NX4IO_RGBLED_setChnlEn(RGB1, true, true, true);
 		NX4IO_RGBLED_setDutyCycle(RGB1, R, G, B);
 		// For RGB2
 		NX4IO_RGBLED_setChnlEn(RGB2, true, true, true);
 		NX4IO_RGBLED_setDutyCycle(RGB2, R, G, B);
-		OLEDrgb_DrawRectangle(&pmodOLEDrgb_inst ,50,0,95,103, 0 ,true, OLEDrgb_BuildRGB(R, G, B));
+
+		xil_printf("LED's R=%d,G=%d,B=%d\n", R, G, B);
+	   OLEDrgb_PutStringXY(0,7, "R                    ");
+	   OLEDrgb_PutIntigerXY(1, 7, R , 10);
+	   OLEDrgb_PutStringXY(4,7, "G");
+	   OLEDrgb_PutIntigerXY(5, 7, G , 10);
+	   OLEDrgb_PutStringXY(8,7, "B");
+	   OLEDrgb_PutIntigerXY(9, 7, B , 10);
+
+		OLEDrgb_DrawRectangle(&pmodOLEDrgb_inst ,50,0,95,103, OLEDrgb_BuildRGB(R, G, B) ,true, OLEDrgb_BuildRGB(R, G, B));
+		OLEDrgb_DrawRectangle(&pmodOLEDrgb_inst ,50,0,95,103, OLEDrgb_BuildRGB(R, G, B) ,true, OLEDrgb_BuildRGB(R, G, B));
 		h = hue; s = sat; v = val;
    }
 }
-#endif
+//#endif
 
 u16 GetHue(void)
 {
 	u32 state = ENC_getState(&pmodENC_inst);;
 	static u32 prev_state;
-	static u16 Hue = 240;
+	static int Hue = 0;
 	Hue += ENC_getRotation(state, prev_state);
+	if (Hue > 360) Hue = 0;
+	if (Hue < 0) Hue = 360;
 	prev_state = state;
 	return Hue;
 }
@@ -250,12 +259,12 @@ bool GetDetectType(void)
 	u32 leds_data = NX4IO_getLEDS_DATA();
 	if((NX4IO_getSwitches() & 0x001) == 1 )
 	{
-		//NX4IO_setLEDs(leds_data | (1UL << 0));
+		NX4IO_setLEDs(leds_data | (1UL << 0));
 		//OLEDrgb_PutStringXY(7,7, "HW" );
 		return true;
 	} else
 	{
-		//NX4IO_setLEDs(leds_data & ~(1UL << 0));
+		NX4IO_setLEDs(leds_data & ~(1UL << 0));
 		//OLEDrgb_PutStringXY(7,7, "SW" );
 		return false;
 	}
@@ -268,7 +277,7 @@ bool IsExit(void)
 	{
 		usleep(5000); // Debounce delay
 		if (ENC_buttonPressed(state) )
-		;//return 0;
+		return 0;
 	}
 
 	if (NX4IO_isPressed(BTNC))
@@ -306,18 +315,19 @@ void OLEDrgb_PutIntigerXY(u8 x, u8 y, int32_t num, int32_t radix)
 	OLEDrgb_PutString(&pmodOLEDrgb_inst, buf);
 }
 
-void UpdateDispaly(u8 hue, u8 sat, u8 val)
+void UpdateDispaly(u16 hue, u8 sat, u8 val)
 {
-	static u8 h = 0, s = 0, v = 0;
+	static u16 h = 0;
+	static u8 s = 0, v = 0;
 
     if( h != hue || s != sat || v != val)
     {
-    	OLEDrgb_PutStringXY(0,1, "Hue:" );
-    	OLEDrgb_PutIntigerXY(4, 1, hue , 10);
-    	OLEDrgb_PutStringXY(0,3, "Sat:" );
-    	OLEDrgb_PutIntigerXY(4, 3, sat , 10);
-    	OLEDrgb_PutStringXY(0,5, "Val:" );
-    	OLEDrgb_PutIntigerXY(4, 5, val , 10);
+    	OLEDrgb_PutStringXY(0,1, "H:   " );
+    	OLEDrgb_PutIntigerXY(2, 1, hue , 10);
+    	OLEDrgb_PutStringXY(0,3, "S:   " );
+    	OLEDrgb_PutIntigerXY(2, 3, sat , 10);
+    	OLEDrgb_PutStringXY(0,5, "V:   " );
+    	OLEDrgb_PutIntigerXY(2, 5, val , 10);
     	//OLEDrgb_DrawRectangle(&pmodOLEDrgb_inst ,50,0,95,103, OLEDrgb_BuildHSV(h,s,v) ,true, OLEDrgb_BuildHSV(h,s,v));
     	h = hue; s = sat; v = val;
     }
@@ -334,8 +344,8 @@ u8 calc_duty(u32 high, u32 low)
 		//xil_printf("High count= %d, low count = %d\n", high, low);
 		 h = high; l = low;
 
-		sum = (high + 1) + (low + 1);
-		duty = (100 * (high + 1)) / sum;
+		sum = (high) + (low);
+		duty = (100 * (high)) / sum;
         duty = duty * 2;
 		if(duty < 0) duty = 0;
 		if(duty > 99) duty = 99;

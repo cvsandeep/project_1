@@ -8,7 +8,7 @@
 #ifndef SRC_FUNCTIONAL_INTERFACE_H_
 #define SRC_FUNCTIONAL_INTERFACE_H_
 
-void UpdateRGBled(u8 hue, u8 sat, u8 val);
+void UpdateRGBled(u16 hue, u8 sat, u8 val, bool display);
 u16 GetHue(void);
 u8 GetSat(void);
 u8 GetVal(void);
@@ -17,7 +17,7 @@ bool IsExit(void);
 void DisplayDutycycle(u8 r_duty, u8 g_duty, u8 b_duty);
 void OLEDrgb_PutStringXY(u8 x, u8 y, char* s);
 void OLEDrgb_PutIntigerXY(u8 x, u8 y, int32_t num, int32_t radix);
-void UpdateDispaly(u8 hue, u8 sat, u8 val);
+void UpdateDispaly(u16 hue, u8 sat, u8 val);
 u8 calc_duty(u32 high, u32 low);
 
 void RunTest1(void);

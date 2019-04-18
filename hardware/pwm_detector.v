@@ -51,6 +51,11 @@ module pwm_detector #(
 			else if(prev_pwm == 0 && pwm_signal == 0)
 			begin
 			     lcount <= lcount + 1;
+			     if(lcount == 32'h00FFFFF)
+			     begin
+			         low_count <= 32'b0;
+			         high_count <= 32'b0;
+			     end
 			end
 			else if (prev_pwm == 0 && pwm_signal == 1)
 			begin
