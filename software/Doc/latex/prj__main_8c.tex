@@ -1,0 +1,129 @@
+\hypertarget{prj__main_8c}{}\section{prj\+\_\+main.\+c File Reference}
+\label{prj__main_8c}\index{prj\+\_\+main.\+c@{prj\+\_\+main.\+c}}
+{\ttfamily \#include \char`\"{}functional\+\_\+interface.\+h\char`\"{}}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{prj__main_8c_aa3b5d74c92caf9dcc4f4564573e712ae}{rising\+\_\+detect}~1
+\item 
+\#define \hyperlink{prj__main_8c_aa1e31d82dd3a5b46b55cf7ec41cc969a}{falling\+\_\+detect}~2
+\item 
+\#define \hyperlink{prj__main_8c_acdbe2b74753571d3fc6f200de0e4e530}{duty\+\_\+calc}~3
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{prj__main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main} (void)
+\item 
+void \hyperlink{prj__main_8c_a718e92338740f1c59c661da483db126e}{F\+I\+T\+\_\+\+Handler} (void)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+volatile u8 \hyperlink{prj__main_8c_a55fddac2dc82da463c3bae1c5162d2e1}{duty\+\_\+cycle} \mbox{[}3\mbox{]} = \{1,2,3\}
+\item 
+volatile bool \hyperlink{prj__main_8c_af287e79fb2f34fe1a51bb733bae02d02}{signal} \mbox{[}3\mbox{]}
+\item 
+volatile bool \hyperlink{prj__main_8c_ad7415f19df5d071ff12c8bcbed214294}{old\+\_\+signal} \mbox{[}3\mbox{]}
+\item 
+volatile u8 \hyperlink{prj__main_8c_aacf6bed4421cb1596af3fe3fac448603}{type} = 0
+\item 
+volatile u32 \hyperlink{prj__main_8c_a999256166fc343e1c9fa7c4d89a28d12}{high\+\_\+level} \mbox{[}3\mbox{]}
+\item 
+volatile u32 \hyperlink{prj__main_8c_a75adf92649b54cb5d5f41f99d9bf2c6d}{low\+\_\+level} \mbox{[}3\mbox{]}
+\item 
+volatile u8 \hyperlink{prj__main_8c_a47c050c0a560c1aa4435183558bacd59}{high\+\_\+count} \mbox{[}3\mbox{]}
+\item 
+volatile u8 \hyperlink{prj__main_8c_a996d438483058e3c11247cded5e5ce27}{low\+\_\+count} \mbox{[}3\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{prj__main_8c_acdbe2b74753571d3fc6f200de0e4e530}\label{prj__main_8c_acdbe2b74753571d3fc6f200de0e4e530}} 
+\index{prj\+\_\+main.\+c@{prj\+\_\+main.\+c}!duty\+\_\+calc@{duty\+\_\+calc}}
+\index{duty\+\_\+calc@{duty\+\_\+calc}!prj\+\_\+main.\+c@{prj\+\_\+main.\+c}}
+\subsubsection{\texorpdfstring{duty\+\_\+calc}{duty\_calc}}
+{\footnotesize\ttfamily \#define duty\+\_\+calc~3}
+
+\mbox{\Hypertarget{prj__main_8c_aa1e31d82dd3a5b46b55cf7ec41cc969a}\label{prj__main_8c_aa1e31d82dd3a5b46b55cf7ec41cc969a}} 
+\index{prj\+\_\+main.\+c@{prj\+\_\+main.\+c}!falling\+\_\+detect@{falling\+\_\+detect}}
+\index{falling\+\_\+detect@{falling\+\_\+detect}!prj\+\_\+main.\+c@{prj\+\_\+main.\+c}}
+\subsubsection{\texorpdfstring{falling\+\_\+detect}{falling\_detect}}
+{\footnotesize\ttfamily \#define falling\+\_\+detect~2}
+
+\mbox{\Hypertarget{prj__main_8c_aa3b5d74c92caf9dcc4f4564573e712ae}\label{prj__main_8c_aa3b5d74c92caf9dcc4f4564573e712ae}} 
+\index{prj\+\_\+main.\+c@{prj\+\_\+main.\+c}!rising\+\_\+detect@{rising\+\_\+detect}}
+\index{rising\+\_\+detect@{rising\+\_\+detect}!prj\+\_\+main.\+c@{prj\+\_\+main.\+c}}
+\subsubsection{\texorpdfstring{rising\+\_\+detect}{rising\_detect}}
+{\footnotesize\ttfamily \#define rising\+\_\+detect~1}
+
+Fixed interval timer interrupt handler
+
+Reads the G\+P\+IO port which reads back the hardware generated P\+WM wave for the R\+GB Leds
+
+Calculates the duty cycle at every rising edge Counts low and high signals depending on previous signals 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{prj__main_8c_a718e92338740f1c59c661da483db126e}\label{prj__main_8c_a718e92338740f1c59c661da483db126e}} 
+\index{prj\+\_\+main.\+c@{prj\+\_\+main.\+c}!F\+I\+T\+\_\+\+Handler@{F\+I\+T\+\_\+\+Handler}}
+\index{F\+I\+T\+\_\+\+Handler@{F\+I\+T\+\_\+\+Handler}!prj\+\_\+main.\+c@{prj\+\_\+main.\+c}}
+\subsubsection{\texorpdfstring{F\+I\+T\+\_\+\+Handler()}{FIT\_Handler()}}
+{\footnotesize\ttfamily void F\+I\+T\+\_\+\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{prj__main_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{prj__main_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{prj\+\_\+main.\+c@{prj\+\_\+main.\+c}!main@{main}}
+\index{main@{main}!prj\+\_\+main.\+c@{prj\+\_\+main.\+c}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{prj__main_8c_a55fddac2dc82da463c3bae1c5162d2e1}\label{prj__main_8c_a55fddac2dc82da463c3bae1c5162d2e1}} 
+\index{prj\+\_\+main.\+c@{prj\+\_\+main.\+c}!duty\+\_\+cycle@{duty\+\_\+cycle}}
+\index{duty\+\_\+cycle@{duty\+\_\+cycle}!prj\+\_\+main.\+c@{prj\+\_\+main.\+c}}
+\subsubsection{\texorpdfstring{duty\+\_\+cycle}{duty\_cycle}}
+{\footnotesize\ttfamily volatile u8 duty\+\_\+cycle\mbox{[}3\mbox{]} = \{1,2,3\}}
+
+\mbox{\Hypertarget{prj__main_8c_a47c050c0a560c1aa4435183558bacd59}\label{prj__main_8c_a47c050c0a560c1aa4435183558bacd59}} 
+\index{prj\+\_\+main.\+c@{prj\+\_\+main.\+c}!high\+\_\+count@{high\+\_\+count}}
+\index{high\+\_\+count@{high\+\_\+count}!prj\+\_\+main.\+c@{prj\+\_\+main.\+c}}
+\subsubsection{\texorpdfstring{high\+\_\+count}{high\_count}}
+{\footnotesize\ttfamily volatile u8 high\+\_\+count\mbox{[}3\mbox{]}}
+
+\mbox{\Hypertarget{prj__main_8c_a999256166fc343e1c9fa7c4d89a28d12}\label{prj__main_8c_a999256166fc343e1c9fa7c4d89a28d12}} 
+\index{prj\+\_\+main.\+c@{prj\+\_\+main.\+c}!high\+\_\+level@{high\+\_\+level}}
+\index{high\+\_\+level@{high\+\_\+level}!prj\+\_\+main.\+c@{prj\+\_\+main.\+c}}
+\subsubsection{\texorpdfstring{high\+\_\+level}{high\_level}}
+{\footnotesize\ttfamily volatile u32 high\+\_\+level\mbox{[}3\mbox{]}}
+
+\mbox{\Hypertarget{prj__main_8c_a996d438483058e3c11247cded5e5ce27}\label{prj__main_8c_a996d438483058e3c11247cded5e5ce27}} 
+\index{prj\+\_\+main.\+c@{prj\+\_\+main.\+c}!low\+\_\+count@{low\+\_\+count}}
+\index{low\+\_\+count@{low\+\_\+count}!prj\+\_\+main.\+c@{prj\+\_\+main.\+c}}
+\subsubsection{\texorpdfstring{low\+\_\+count}{low\_count}}
+{\footnotesize\ttfamily volatile u8 low\+\_\+count\mbox{[}3\mbox{]}}
+
+\mbox{\Hypertarget{prj__main_8c_a75adf92649b54cb5d5f41f99d9bf2c6d}\label{prj__main_8c_a75adf92649b54cb5d5f41f99d9bf2c6d}} 
+\index{prj\+\_\+main.\+c@{prj\+\_\+main.\+c}!low\+\_\+level@{low\+\_\+level}}
+\index{low\+\_\+level@{low\+\_\+level}!prj\+\_\+main.\+c@{prj\+\_\+main.\+c}}
+\subsubsection{\texorpdfstring{low\+\_\+level}{low\_level}}
+{\footnotesize\ttfamily volatile u32 low\+\_\+level\mbox{[}3\mbox{]}}
+
+\mbox{\Hypertarget{prj__main_8c_ad7415f19df5d071ff12c8bcbed214294}\label{prj__main_8c_ad7415f19df5d071ff12c8bcbed214294}} 
+\index{prj\+\_\+main.\+c@{prj\+\_\+main.\+c}!old\+\_\+signal@{old\+\_\+signal}}
+\index{old\+\_\+signal@{old\+\_\+signal}!prj\+\_\+main.\+c@{prj\+\_\+main.\+c}}
+\subsubsection{\texorpdfstring{old\+\_\+signal}{old\_signal}}
+{\footnotesize\ttfamily volatile bool old\+\_\+signal\mbox{[}3\mbox{]}}
+
+\mbox{\Hypertarget{prj__main_8c_af287e79fb2f34fe1a51bb733bae02d02}\label{prj__main_8c_af287e79fb2f34fe1a51bb733bae02d02}} 
+\index{prj\+\_\+main.\+c@{prj\+\_\+main.\+c}!signal@{signal}}
+\index{signal@{signal}!prj\+\_\+main.\+c@{prj\+\_\+main.\+c}}
+\subsubsection{\texorpdfstring{signal}{signal}}
+{\footnotesize\ttfamily volatile bool signal\mbox{[}3\mbox{]}}
+
+\mbox{\Hypertarget{prj__main_8c_aacf6bed4421cb1596af3fe3fac448603}\label{prj__main_8c_aacf6bed4421cb1596af3fe3fac448603}} 
+\index{prj\+\_\+main.\+c@{prj\+\_\+main.\+c}!type@{type}}
+\index{type@{type}!prj\+\_\+main.\+c@{prj\+\_\+main.\+c}}
+\subsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily volatile u8 type = 0}
+

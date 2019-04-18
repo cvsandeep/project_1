@@ -1,0 +1,104 @@
+\hypertarget{hw__interface_8c}{}\section{hw\+\_\+interface.\+c File Reference}
+\label{hw__interface_8c}\index{hw\+\_\+interface.\+c@{hw\+\_\+interface.\+c}}
+{\ttfamily \#include \char`\"{}hw\+\_\+interface.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{hw__interface_8c_a9604fc4a85dd1b6e3724f9835e964ffa}{do\+\_\+init} (void)
+\item 
+int \hyperlink{hw__interface_8c_a489cdfa2a97c0a6394bbbf834d82806e}{A\+X\+I\+\_\+\+Timer\+\_\+initialize} (void)
+\item 
+void \hyperlink{hw__interface_8c_a100dcbb9a7e41e9196681ea72a2131bf}{P\+M\+D\+I\+O\+\_\+itoa} (int32\+\_\+t value, char $\ast$string, int32\+\_\+t radix)
+\item 
+void \hyperlink{hw__interface_8c_a67cf9ac870ce035f75cd54791e6f6a22}{P\+M\+D\+I\+O\+\_\+puthex} (Pmod\+O\+L\+E\+Drgb $\ast$Instance\+Ptr, uint32\+\_\+t num)
+\item 
+void \hyperlink{hw__interface_8c_a0cea01c2e88267898ea4020d16f46b33}{P\+M\+D\+I\+O\+\_\+putnum} (Pmod\+O\+L\+E\+Drgb $\ast$Instance\+Ptr, int32\+\_\+t num, int32\+\_\+t radix)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{hw__interface_8c_a489cdfa2a97c0a6394bbbf834d82806e}\label{hw__interface_8c_a489cdfa2a97c0a6394bbbf834d82806e}} 
+\index{hw\+\_\+interface.\+c@{hw\+\_\+interface.\+c}!A\+X\+I\+\_\+\+Timer\+\_\+initialize@{A\+X\+I\+\_\+\+Timer\+\_\+initialize}}
+\index{A\+X\+I\+\_\+\+Timer\+\_\+initialize@{A\+X\+I\+\_\+\+Timer\+\_\+initialize}!hw\+\_\+interface.\+c@{hw\+\_\+interface.\+c}}
+\subsubsection{\texorpdfstring{A\+X\+I\+\_\+\+Timer\+\_\+initialize()}{AXI\_Timer\_initialize()}}
+{\footnotesize\ttfamily int A\+X\+I\+\_\+\+Timer\+\_\+initialize (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{hw__interface_8c_a9604fc4a85dd1b6e3724f9835e964ffa}\label{hw__interface_8c_a9604fc4a85dd1b6e3724f9835e964ffa}} 
+\index{hw\+\_\+interface.\+c@{hw\+\_\+interface.\+c}!do\+\_\+init@{do\+\_\+init}}
+\index{do\+\_\+init@{do\+\_\+init}!hw\+\_\+interface.\+c@{hw\+\_\+interface.\+c}}
+\subsubsection{\texorpdfstring{do\+\_\+init()}{do\_init()}}
+{\footnotesize\ttfamily int do\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+initialize the system
+
+This function is executed once at start-\/up and after resets. It initializes the peripherals and registers the interrupt handler(s) \mbox{\Hypertarget{hw__interface_8c_a100dcbb9a7e41e9196681ea72a2131bf}\label{hw__interface_8c_a100dcbb9a7e41e9196681ea72a2131bf}} 
+\index{hw\+\_\+interface.\+c@{hw\+\_\+interface.\+c}!P\+M\+D\+I\+O\+\_\+itoa@{P\+M\+D\+I\+O\+\_\+itoa}}
+\index{P\+M\+D\+I\+O\+\_\+itoa@{P\+M\+D\+I\+O\+\_\+itoa}!hw\+\_\+interface.\+c@{hw\+\_\+interface.\+c}}
+\subsubsection{\texorpdfstring{P\+M\+D\+I\+O\+\_\+itoa()}{PMDIO\_itoa()}}
+{\footnotesize\ttfamily void P\+M\+D\+I\+O\+\_\+itoa (\begin{DoxyParamCaption}\item[{int32\+\_\+t}]{value,  }\item[{char $\ast$}]{string,  }\item[{int32\+\_\+t}]{radix }\end{DoxyParamCaption})}
+
+Converts an integer to A\+S\+C\+II characters
+
+algorithm borrowed from React\+OS system libraries
+
+Converts an integer to A\+S\+C\+II in the specified base. Assumes string\mbox{[}\mbox{]} is long enough to hold the result plus the terminating null
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & is the integer to convert \\
+\hline
+{\em $\ast$string} & is a pointer to a buffer large enough to hold the converted number plus the terminating null \\
+\hline
+{\em radix} & is the base to use in conversion,\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\itshape N\+O\+NE}
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+No size check is done on the return string size. Make sure you leave room for the full string plus the terminating null in string 
+\end{DoxyNote}
+\mbox{\Hypertarget{hw__interface_8c_a67cf9ac870ce035f75cd54791e6f6a22}\label{hw__interface_8c_a67cf9ac870ce035f75cd54791e6f6a22}} 
+\index{hw\+\_\+interface.\+c@{hw\+\_\+interface.\+c}!P\+M\+D\+I\+O\+\_\+puthex@{P\+M\+D\+I\+O\+\_\+puthex}}
+\index{P\+M\+D\+I\+O\+\_\+puthex@{P\+M\+D\+I\+O\+\_\+puthex}!hw\+\_\+interface.\+c@{hw\+\_\+interface.\+c}}
+\subsubsection{\texorpdfstring{P\+M\+D\+I\+O\+\_\+puthex()}{PMDIO\_puthex()}}
+{\footnotesize\ttfamily void P\+M\+D\+I\+O\+\_\+puthex (\begin{DoxyParamCaption}\item[{Pmod\+O\+L\+E\+Drgb $\ast$}]{Instance\+Ptr,  }\item[{uint32\+\_\+t}]{num }\end{DoxyParamCaption})}
+
+Write a 32-\/bit unsigned hex number to Pmod\+O\+L\+E\+Drgb in Hex
+
+Writes 32-\/bit unsigned number to the pmod\+O\+L\+E\+Drgb display starting at the current cursor position.
+
+
+\begin{DoxyParams}{Parameters}
+{\em num} & is the number to display as a hex value\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\itshape N\+O\+NE}
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+No size checking is done to make sure the string will fit into a single line, or the entire display, for that matter. Watch your string sizes. 
+\end{DoxyNote}
+\mbox{\Hypertarget{hw__interface_8c_a0cea01c2e88267898ea4020d16f46b33}\label{hw__interface_8c_a0cea01c2e88267898ea4020d16f46b33}} 
+\index{hw\+\_\+interface.\+c@{hw\+\_\+interface.\+c}!P\+M\+D\+I\+O\+\_\+putnum@{P\+M\+D\+I\+O\+\_\+putnum}}
+\index{P\+M\+D\+I\+O\+\_\+putnum@{P\+M\+D\+I\+O\+\_\+putnum}!hw\+\_\+interface.\+c@{hw\+\_\+interface.\+c}}
+\subsubsection{\texorpdfstring{P\+M\+D\+I\+O\+\_\+putnum()}{PMDIO\_putnum()}}
+{\footnotesize\ttfamily void P\+M\+D\+I\+O\+\_\+putnum (\begin{DoxyParamCaption}\item[{Pmod\+O\+L\+E\+Drgb $\ast$}]{Instance\+Ptr,  }\item[{int32\+\_\+t}]{num,  }\item[{int32\+\_\+t}]{radix }\end{DoxyParamCaption})}
+
+Write a 32-\/bit number in Radix \char`\"{}radix\char`\"{} to L\+CD display
+
+Writes a 32-\/bit number to the L\+CD display starting at the current cursor position. \char`\"{}radix\char`\"{} is the base to output the number in.
+
+
+\begin{DoxyParams}{Parameters}
+{\em num} & is the number to display\\
+\hline
+{\em radix} & is the radix to display number in\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\itshape N\+O\+NE}
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+No size checking is done to make sure the string will fit into a single line, or the entire display, for that matter. Watch your string sizes. 
+\end{DoxyNote}

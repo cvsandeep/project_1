@@ -1,0 +1,210 @@
+\hypertarget{functional__interface_8h}{}\section{functional\+\_\+interface.\+h File Reference}
+\label{functional__interface_8h}\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+{\ttfamily \#include \char`\"{}hw\+\_\+interface.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{functional__interface_8h_a300da48c76dd26d9d772bacb461953cd}{Update\+R\+G\+Bled} (u16 hue, u8 sat, u8 val, bool display)
+\item 
+u16 \hyperlink{functional__interface_8h_a6d4ef175e193d466e5820477f00e5b2a}{Get\+Hue} (void)
+\item 
+u8 \hyperlink{functional__interface_8h_a817a2e915b79f7a836e7654bab9345bc}{Get\+Sat} (void)
+\item 
+u8 \hyperlink{functional__interface_8h_a843df127e5677bc8e08b9071913b9606}{Get\+Val} (void)
+\item 
+bool \hyperlink{functional__interface_8h_aea91e8a97f7747550479a400dcbdfd50}{Get\+Detect\+Type} (void)
+\item 
+bool \hyperlink{functional__interface_8h_a8a0c6951b53b172415f278775a7e36b7}{Is\+Exit} (void)
+\item 
+void \hyperlink{functional__interface_8h_a1ced09dc56440fbd5618cd087305254c}{Display\+Dutycycle} (u8 r\+\_\+duty, u8 g\+\_\+duty, u8 b\+\_\+duty)
+\item 
+void \hyperlink{functional__interface_8h_a7c83a0be76a8d7e3f5e59bc088ee9f70}{O\+L\+E\+Drgb\+\_\+\+Put\+String\+XY} (u8 x, u8 y, char $\ast$s)
+\item 
+void \hyperlink{functional__interface_8h_a7d7fb4d8451defc4c83d63315a7a5bd4}{O\+L\+E\+Drgb\+\_\+\+Put\+Intiger\+XY} (u8 x, u8 y, int32\+\_\+t num, int32\+\_\+t radix)
+\item 
+void \hyperlink{functional__interface_8h_a85c00b5e1cff7cc4c1b404e7649d0228}{Update\+Dispaly} (u16 hue, u8 sat, u8 val)
+\item 
+u8 \hyperlink{functional__interface_8h_a46823caff2615261777f2058e1aa1270}{calc\+\_\+duty} (u32 high, u32 low)
+\item 
+void \hyperlink{functional__interface_8h_a76c197e7dc8bd03eb75da5b1127f6cb0}{Run\+Test1} (void)
+\item 
+void \hyperlink{functional__interface_8h_aa8d2a22a42825cfeacebc7a5e519e5fb}{Run\+Test2} (void)
+\item 
+void \hyperlink{functional__interface_8h_adb280111a70afcb856b361d134a4d88d}{Run\+Test3} (void)
+\item 
+void \hyperlink{functional__interface_8h_a3c136a5025552ab00170d0127417aa37}{Run\+Test4} (void)
+\item 
+void \hyperlink{functional__interface_8h_a7b2e8cdba6a25121f116b34bedc349bb}{Run\+Test5} (void)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{functional__interface_8h_a46823caff2615261777f2058e1aa1270}\label{functional__interface_8h_a46823caff2615261777f2058e1aa1270}} 
+\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}!calc\+\_\+duty@{calc\+\_\+duty}}
+\index{calc\+\_\+duty@{calc\+\_\+duty}!functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+\subsubsection{\texorpdfstring{calc\+\_\+duty()}{calc\_duty()}}
+{\footnotesize\ttfamily u8 calc\+\_\+duty (\begin{DoxyParamCaption}\item[{u32}]{high,  }\item[{u32}]{low }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em high} & count of the pwm \\
+\hline
+{\em low} & count of the pwm \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+Description\+: Caluculates the Duty cycle based on the counts \mbox{\Hypertarget{functional__interface_8h_a1ced09dc56440fbd5618cd087305254c}\label{functional__interface_8h_a1ced09dc56440fbd5618cd087305254c}} 
+\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}!Display\+Dutycycle@{Display\+Dutycycle}}
+\index{Display\+Dutycycle@{Display\+Dutycycle}!functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+\subsubsection{\texorpdfstring{Display\+Dutycycle()}{DisplayDutycycle()}}
+{\footnotesize\ttfamily void Display\+Dutycycle (\begin{DoxyParamCaption}\item[{u8}]{r\+\_\+duty,  }\item[{u8}]{g\+\_\+duty,  }\item[{u8}]{b\+\_\+duty }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em r\+\_\+duty} & Red Duty cycle \\
+\hline
+{\em g\+\_\+duty} & Green Duty cycle \\
+\hline
+{\em b\+\_\+duty} & Blue Duty cycle\\
+\hline
+\end{DoxyParams}
+Description\+: Displays the duty cycles for rgb on the seven segment Display. \mbox{\Hypertarget{functional__interface_8h_aea91e8a97f7747550479a400dcbdfd50}\label{functional__interface_8h_aea91e8a97f7747550479a400dcbdfd50}} 
+\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}!Get\+Detect\+Type@{Get\+Detect\+Type}}
+\index{Get\+Detect\+Type@{Get\+Detect\+Type}!functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+\subsubsection{\texorpdfstring{Get\+Detect\+Type()}{GetDetectType()}}
+{\footnotesize\ttfamily bool Get\+Detect\+Type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+bool \hyperlink{functional__interface_8c_aea91e8a97f7747550479a400dcbdfd50}{Get\+Detect\+Type(void)}
+
+\begin{DoxyReturn}{Returns}
+which type of pwm detection is nedded 1 -\/ for HW detect 2 -\/ for SW detect Description\+: Based on the zero switch position to detect which type of P\+WM detection to use and turn on and off L\+E\+D0 based on that. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{functional__interface_8h_a6d4ef175e193d466e5820477f00e5b2a}\label{functional__interface_8h_a6d4ef175e193d466e5820477f00e5b2a}} 
+\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}!Get\+Hue@{Get\+Hue}}
+\index{Get\+Hue@{Get\+Hue}!functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+\subsubsection{\texorpdfstring{Get\+Hue()}{GetHue()}}
+{\footnotesize\ttfamily u16 Get\+Hue (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+u16 \hyperlink{functional__interface_8c_a6d4ef175e193d466e5820477f00e5b2a}{Get\+Hue(void)}
+
+\begin{DoxyReturn}{Returns}
+The Hue value for the color
+\end{DoxyReturn}
+Description\+: Updates the Hue value value based on the rotatry encoder turn direction \mbox{\Hypertarget{functional__interface_8h_a817a2e915b79f7a836e7654bab9345bc}\label{functional__interface_8h_a817a2e915b79f7a836e7654bab9345bc}} 
+\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}!Get\+Sat@{Get\+Sat}}
+\index{Get\+Sat@{Get\+Sat}!functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+\subsubsection{\texorpdfstring{Get\+Sat()}{GetSat()}}
+{\footnotesize\ttfamily u8 Get\+Sat (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+u8 \hyperlink{functional__interface_8c_a817a2e915b79f7a836e7654bab9345bc}{Get\+Sat(void)}
+
+\begin{DoxyReturn}{Returns}
+the saturation value for the color
+\end{DoxyReturn}
+Description\+: Updates the saturation based on left and right buttons Uses de-\/bounce delay for the button press \mbox{\Hypertarget{functional__interface_8h_a843df127e5677bc8e08b9071913b9606}\label{functional__interface_8h_a843df127e5677bc8e08b9071913b9606}} 
+\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}!Get\+Val@{Get\+Val}}
+\index{Get\+Val@{Get\+Val}!functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+\subsubsection{\texorpdfstring{Get\+Val()}{GetVal()}}
+{\footnotesize\ttfamily u8 Get\+Val (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+u8 \hyperlink{functional__interface_8c_a843df127e5677bc8e08b9071913b9606}{Get\+Val(void)}
+
+\begin{DoxyReturn}{Returns}
+Val for the color
+\end{DoxyReturn}
+Description\+: Updates the V value based on up and down buttons Uses de-\/bounce delay for the button press \mbox{\Hypertarget{functional__interface_8h_a8a0c6951b53b172415f278775a7e36b7}\label{functional__interface_8h_a8a0c6951b53b172415f278775a7e36b7}} 
+\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}!Is\+Exit@{Is\+Exit}}
+\index{Is\+Exit@{Is\+Exit}!functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+\subsubsection{\texorpdfstring{Is\+Exit()}{IsExit()}}
+{\footnotesize\ttfamily bool Is\+Exit (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+bool \hyperlink{functional__interface_8c_a8a0c6951b53b172415f278775a7e36b7}{Is\+Exit(void)}
+
+\begin{DoxyReturn}{Returns}
+1 for running; 0 for exit
+\end{DoxyReturn}
+Description\+: Checks the buttons and encoder when to exit Uses de-\/bounce delay for the button press \mbox{\Hypertarget{functional__interface_8h_a7d7fb4d8451defc4c83d63315a7a5bd4}\label{functional__interface_8h_a7d7fb4d8451defc4c83d63315a7a5bd4}} 
+\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}!O\+L\+E\+Drgb\+\_\+\+Put\+Intiger\+XY@{O\+L\+E\+Drgb\+\_\+\+Put\+Intiger\+XY}}
+\index{O\+L\+E\+Drgb\+\_\+\+Put\+Intiger\+XY@{O\+L\+E\+Drgb\+\_\+\+Put\+Intiger\+XY}!functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+\subsubsection{\texorpdfstring{O\+L\+E\+Drgb\+\_\+\+Put\+Intiger\+X\+Y()}{OLEDrgb\_PutIntigerXY()}}
+{\footnotesize\ttfamily void O\+L\+E\+Drgb\+\_\+\+Put\+Intiger\+XY (\begin{DoxyParamCaption}\item[{u8}]{x,  }\item[{u8}]{y,  }\item[{int32\+\_\+t}]{num,  }\item[{int32\+\_\+t}]{radix }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x axis for the display \\
+\hline
+{\em y} & y axis for the display \\
+\hline
+{\em num} & Integer to be displayon the screen \\
+\hline
+{\em radix} & to represent on which Format it need to be displayed\\
+\hline
+\end{DoxyParams}
+Description\+: Displays the number at xy location on the pmod oled display \mbox{\Hypertarget{functional__interface_8h_a7c83a0be76a8d7e3f5e59bc088ee9f70}\label{functional__interface_8h_a7c83a0be76a8d7e3f5e59bc088ee9f70}} 
+\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}!O\+L\+E\+Drgb\+\_\+\+Put\+String\+XY@{O\+L\+E\+Drgb\+\_\+\+Put\+String\+XY}}
+\index{O\+L\+E\+Drgb\+\_\+\+Put\+String\+XY@{O\+L\+E\+Drgb\+\_\+\+Put\+String\+XY}!functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+\subsubsection{\texorpdfstring{O\+L\+E\+Drgb\+\_\+\+Put\+String\+X\+Y()}{OLEDrgb\_PutStringXY()}}
+{\footnotesize\ttfamily void O\+L\+E\+Drgb\+\_\+\+Put\+String\+XY (\begin{DoxyParamCaption}\item[{u8}]{x,  }\item[{u8}]{y,  }\item[{char $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x axis for the display \\
+\hline
+{\em y} & y axis for the display \\
+\hline
+{\em s} & string to be displayed\\
+\hline
+\end{DoxyParams}
+Description\+: Displays the string at xy location on the pmod oled display \mbox{\Hypertarget{functional__interface_8h_a76c197e7dc8bd03eb75da5b1127f6cb0}\label{functional__interface_8h_a76c197e7dc8bd03eb75da5b1127f6cb0}} 
+\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}!Run\+Test1@{Run\+Test1}}
+\index{Run\+Test1@{Run\+Test1}!functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+\subsubsection{\texorpdfstring{Run\+Test1()}{RunTest1()}}
+{\footnotesize\ttfamily void Run\+Test1 (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{functional__interface_8h_aa8d2a22a42825cfeacebc7a5e519e5fb}\label{functional__interface_8h_aa8d2a22a42825cfeacebc7a5e519e5fb}} 
+\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}!Run\+Test2@{Run\+Test2}}
+\index{Run\+Test2@{Run\+Test2}!functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+\subsubsection{\texorpdfstring{Run\+Test2()}{RunTest2()}}
+{\footnotesize\ttfamily void Run\+Test2 (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{functional__interface_8h_adb280111a70afcb856b361d134a4d88d}\label{functional__interface_8h_adb280111a70afcb856b361d134a4d88d}} 
+\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}!Run\+Test3@{Run\+Test3}}
+\index{Run\+Test3@{Run\+Test3}!functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+\subsubsection{\texorpdfstring{Run\+Test3()}{RunTest3()}}
+{\footnotesize\ttfamily void Run\+Test3 (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{functional__interface_8h_a3c136a5025552ab00170d0127417aa37}\label{functional__interface_8h_a3c136a5025552ab00170d0127417aa37}} 
+\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}!Run\+Test4@{Run\+Test4}}
+\index{Run\+Test4@{Run\+Test4}!functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+\subsubsection{\texorpdfstring{Run\+Test4()}{RunTest4()}}
+{\footnotesize\ttfamily void Run\+Test4 (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{functional__interface_8h_a7b2e8cdba6a25121f116b34bedc349bb}\label{functional__interface_8h_a7b2e8cdba6a25121f116b34bedc349bb}} 
+\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}!Run\+Test5@{Run\+Test5}}
+\index{Run\+Test5@{Run\+Test5}!functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+\subsubsection{\texorpdfstring{Run\+Test5()}{RunTest5()}}
+{\footnotesize\ttfamily void Run\+Test5 (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{functional__interface_8h_a85c00b5e1cff7cc4c1b404e7649d0228}\label{functional__interface_8h_a85c00b5e1cff7cc4c1b404e7649d0228}} 
+\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}!Update\+Dispaly@{Update\+Dispaly}}
+\index{Update\+Dispaly@{Update\+Dispaly}!functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+\subsubsection{\texorpdfstring{Update\+Dispaly()}{UpdateDispaly()}}
+{\footnotesize\ttfamily void Update\+Dispaly (\begin{DoxyParamCaption}\item[{u16}]{hue,  }\item[{u8}]{sat,  }\item[{u8}]{val }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em hue} & \\
+\hline
+{\em sat} & \\
+\hline
+{\em val} & Description\+: Updates the the values of H\+SV on the display. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{functional__interface_8h_a300da48c76dd26d9d772bacb461953cd}\label{functional__interface_8h_a300da48c76dd26d9d772bacb461953cd}} 
+\index{functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}!Update\+R\+G\+Bled@{Update\+R\+G\+Bled}}
+\index{Update\+R\+G\+Bled@{Update\+R\+G\+Bled}!functional\+\_\+interface.\+h@{functional\+\_\+interface.\+h}}
+\subsubsection{\texorpdfstring{Update\+R\+G\+Bled()}{UpdateRGBled()}}
+{\footnotesize\ttfamily void Update\+R\+G\+Bled (\begin{DoxyParamCaption}\item[{u16}]{hue,  }\item[{u8}]{sat,  }\item[{u8}]{val,  }\item[{bool}]{display }\end{DoxyParamCaption})}
+

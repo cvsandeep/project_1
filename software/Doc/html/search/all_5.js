@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['getdetecttype',['GetDetectType',['../functional__interface_8c.html#aea91e8a97f7747550479a400dcbdfd50',1,'GetDetectType(void):&#160;functional_interface.c'],['../functional__interface_8h.html#aea91e8a97f7747550479a400dcbdfd50',1,'GetDetectType(void):&#160;functional_interface.c']]],
+  ['gethue',['GetHue',['../functional__interface_8c.html#a6d4ef175e193d466e5820477f00e5b2a',1,'GetHue(void):&#160;functional_interface.c'],['../functional__interface_8h.html#a6d4ef175e193d466e5820477f00e5b2a',1,'GetHue(void):&#160;functional_interface.c']]],
+  ['getsat',['GetSat',['../functional__interface_8c.html#a817a2e915b79f7a836e7654bab9345bc',1,'GetSat(void):&#160;functional_interface.c'],['../functional__interface_8h.html#a817a2e915b79f7a836e7654bab9345bc',1,'GetSat(void):&#160;functional_interface.c']]],
+  ['getval',['GetVal',['../functional__interface_8c.html#a843df127e5677bc8e08b9071913b9606',1,'GetVal(void):&#160;functional_interface.c'],['../functional__interface_8h.html#a843df127e5677bc8e08b9071913b9606',1,'GetVal(void):&#160;functional_interface.c']]],
+  ['gpio_5f0_5fdevice_5fid',['GPIO_0_DEVICE_ID',['../hw__interface_8h.html#ae706cf2e92d4e49d6cef806805f42729',1,'hw_interface.h']]],
+  ['gpio_5f0_5finput_5f0_5fchannel',['GPIO_0_INPUT_0_CHANNEL',['../hw__interface_8h.html#aac2cfae7db0f8a1078a80bc86245cd97',1,'hw_interface.h']]],
+  ['gpio_5f0_5foutput_5f0_5fchannel',['GPIO_0_OUTPUT_0_CHANNEL',['../hw__interface_8h.html#a4328c0e1ea8d0abd2953392395bf8b9d',1,'hw_interface.h']]],
+  ['gpio_5fb_5fdevice_5fid',['GPIO_B_DEVICE_ID',['../hw__interface_8h.html#a5cc8845b56aad28470fbdad0d6e43ebf',1,'hw_interface.h']]],
+  ['gpio_5fb_5finput_5fhigh_5fchannel',['GPIO_B_INPUT_HIGH_CHANNEL',['../hw__interface_8h.html#a7e4de8488eec1f6563e889331e4d8f24',1,'hw_interface.h']]],
+  ['gpio_5fb_5finput_5flow_5fchannel',['GPIO_B_INPUT_LOW_CHANNEL',['../hw__interface_8h.html#a3b7cd6df4623b273ec8234d23564e621',1,'hw_interface.h']]],
+  ['gpio_5fg_5fdevice_5fid',['GPIO_G_DEVICE_ID',['../hw__interface_8h.html#aadafe2f6c78bbca77bbaabf26d4e28b1',1,'hw_interface.h']]],
+  ['gpio_5fg_5finput_5fhigh_5fchannel',['GPIO_G_INPUT_HIGH_CHANNEL',['../hw__interface_8h.html#ae4fb406a15ef00565f9f30f24d6f55e2',1,'hw_interface.h']]],
+  ['gpio_5fg_5finput_5flow_5fchannel',['GPIO_G_INPUT_LOW_CHANNEL',['../hw__interface_8h.html#a727ac44572a827f302770add100e3144',1,'hw_interface.h']]],
+  ['gpio_5fin',['gpio_in',['../hw__interface_8h.html#a4b14114a94f758dd7f4110e869e00824',1,'hw_interface.h']]],
+  ['gpio_5fr_5fdevice_5fid',['GPIO_R_DEVICE_ID',['../hw__interface_8h.html#a0fd070ca18cdff3514739698ff73a20c',1,'hw_interface.h']]],
+  ['gpio_5fr_5finput_5fhigh_5fchannel',['GPIO_R_INPUT_HIGH_CHANNEL',['../hw__interface_8h.html#afae6e7d973f25d94b4423ab262196fca',1,'hw_interface.h']]],
+  ['gpio_5fr_5finput_5flow_5fchannel',['GPIO_R_INPUT_LOW_CHANNEL',['../hw__interface_8h.html#a704d85a8981de5eec01b09456a0a63eb',1,'hw_interface.h']]],
+  ['gpioinst0',['GPIOInst0',['../hw__interface_8h.html#a663dfc2f931529553e86cb773ee23dd0',1,'hw_interface.h']]],
+  ['gpioinstb',['GPIOInstB',['../hw__interface_8h.html#a4c2fc3c409954d4e925d0b28c7064d53',1,'hw_interface.h']]],
+  ['gpioinstg',['GPIOInstG',['../hw__interface_8h.html#ae51bb8c5ab7eabe6b324d6e0609bc4bb',1,'hw_interface.h']]],
+  ['gpioinstr',['GPIOInstR',['../hw__interface_8h.html#a16660a978572fbc02bcb442513bd8977',1,'hw_interface.h']]]
+];
