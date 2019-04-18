@@ -1,47 +1,9 @@
-/**
+/*
+ * functional_interface.c
  *
- * @file ece544ip_test.c
- *
- * @author Roy Kravitz (roy.kravitz@pdx.edu)
- * @author Srivatsa Yogendra (srivatsa@pdx.edu)
- * @copyright Portland State University, 2016-2018
- *
- * This file implements a test program for the Nexys4IO and Digilent Pmod peripherals
- * used in ECE 544. The peripherals provides access to the Nexys4 pushbuttons
- * and slide switches, the LEDs, the RGB LEDs, and the Seven Segment display
- * on the Digilent Nexys4 DDR board and the PmodOLEDrgb (94 x 64 RGB graphics display) 
- * and the PmodENC (rotary encoder + slide switch + pushbutton).
- *
- * The test is basic but covers all of the API functions:
- *	o initialize the Nexys4IO, Pmod drivers and all the other peripherals
- *	o Set the LED's to different values
- *	o Check that the duty cycles can be set for both RGB LEDs
- *	o Write character codes to the digits of the seven segment display banks
- *	o Check that all of the switches and pushbuttons on the Nexys4 can be read
- *	o Performs a basic test on the rotary encoder and pmodOLEDrgb
- *
- * <pre>
- * MODIFICATION HISTORY:
- *
- * Ver   Who  Date     Changes
- * ----- ---- -------- -----------------------------------------------
- * 1.00a	rhk	02-Jul-2016		First release of test program.  Builds on the ece544 peripheral test used
- *							to check the functionality of Nexys4IO and PMod544IOR2
- * 2.00a sy  14-Oct-2016		Modified the code to include different initialize function for other peripherals 
- *							connected to the system.
- * 3.00	rk	05-Apr-2018		Modified for Digilent PmodENC and PmodOLEDrgb.  Replaced MB_Sleep() w/ usleep.
- * </pre>
- *
- * @note
- * The minimal hardware configuration for this test is a Microblaze-based system with at least 32KB of memory,
- * an instance of Nexys4IO, an instance of the pmodOLEDrgb AXI slave peripheral, and instance of the pmodENC AXI
- * slave peripheral, an instance of AXI GPIO, an instance of AXI timer and an instance of the AXI UARTLite 
- * (used for xil_printf() console output)
- *
- * @note
- * The driver code and test application(s) for the pmodOLDrgb and pmodENC are
- * based on code provided by Digilent, Inc.
- ******************************************************************************/
+ *  Created on: Apr 9, 2019
+ *      Author: venksand
+ */
 
 #include "functional_interface.h"
 
@@ -286,7 +248,7 @@ u8 GetVal(void) {
 
 /**bool GetDetectType(void)
  *
- * @return which type of pwm detection is nedded
+ * @return which type of pwm detection is needed
  *         1 - for HW detect
  *         2 - for SW detect
  * Description:
@@ -417,7 +379,7 @@ void UpdateDispaly(u16 hue, u8 sat, u8 val) {
  * @return
  *
  * Description:
- *        Caluculates the Duty cycle based on the counts
+ *        Calculates the Duty cycle based on the counts
  */
 u8 calc_duty(u32 high, u32 low) {
 	static u32 h = 1, l = 1;

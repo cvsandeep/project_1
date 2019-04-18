@@ -737,6 +737,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Fixed interval timer interrupt handler</p>
+<p>Reads the GPIO port which reads back the hardware generated PWM wave for the RGB Leds</p>
+<p>Calculates the duty cycle at every rising edge Counts low and high signals depending on previous signals </p>
 
 </div>
 </div>
@@ -816,6 +819,7 @@ Variables</h2></td></tr>
 <p>Writes 32-bit unsigned number to the pmodOLEDrgb display starting at the current cursor position.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">InstancePtr</td><td>Address pointer</td></tr>
     <tr><td class="paramname">num</td><td>is the number to display as a hex value</td></tr>
   </table>
   </dd>
@@ -860,6 +864,7 @@ Variables</h2></td></tr>
 <p>Writes a 32-bit number to the LCD display starting at the current cursor position. "radix" is the base to output the number in.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">InstancePtr</td><td>Address pointer</td></tr>
     <tr><td class="paramname">num</td><td>is the number to display</td></tr>
     <tr><td class="paramname">radix</td><td>is the radix to display number in</td></tr>
   </table>

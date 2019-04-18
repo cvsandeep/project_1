@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['nx4io_5fbaseaddr',['NX4IO_BASEADDR',['../hw__interface_8h.html#add4ca40bb54cadf16237696c4bd5fa36',1,'hw_interface.h']]],
-  ['nx4io_5fdevice_5fid',['NX4IO_DEVICE_ID',['../hw__interface_8h.html#a425e43ee4e354f1c5ef38783b429f26a',1,'hw_interface.h']]],
-  ['nx4io_5fhighaddr',['NX4IO_HIGHADDR',['../hw__interface_8h.html#aa8cc74cd973d0c3cdbbbd987ccd7d243',1,'hw_interface.h']]]
+  ['pmodenc_5fbaseaddr',['PMODENC_BASEADDR',['../hw__interface_8h.html#a276ce884b22f8a486d97d699d54ad6b7',1,'hw_interface.h']]],
+  ['pmodenc_5fdevice_5fid',['PMODENC_DEVICE_ID',['../hw__interface_8h.html#ad45983e4f448d4e3bdd4e23750649927',1,'hw_interface.h']]],
+  ['pmodenc_5fhighaddr',['PMODENC_HIGHADDR',['../hw__interface_8h.html#a8846feaded4099f3442a3a20b4240737',1,'hw_interface.h']]]
 ];
