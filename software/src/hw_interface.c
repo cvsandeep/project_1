@@ -35,12 +35,15 @@ int	 do_init(void)
 	NX4IO_SSEG_setSSEG_DATA(SSEGHI, 0x0058E30E);
 	NX4IO_SSEG_setSSEG_DATA(SSEGLO, 0x00144116);
 
+	//Initializing PMODoLEDRGB
 	OLEDrgb_begin(&pmodOLEDrgb_inst, RGBDSPLY_GPIO_BASEADDR, RGBDSPLY_SPI_BASEADDR);
+	//Set Default font color to Blue
+	OLEDrgb_SetFontColor(&pmodOLEDrgb_inst ,OLEDrgb_BuildHSV(255,255,255));
 
 	// initialize the pmodENC and hardware
 	ENC_begin(&pmodENC_inst, PMODENC_BASEADDR);
 
-	// initialize the GPIO instances
+	// initialize All the GPIO instances
 	status = XGpio_Initialize(&GPIOInst0, GPIO_0_DEVICE_ID);
 	if (status != XST_SUCCESS)
 	{
@@ -65,8 +68,7 @@ int	 do_init(void)
 		return XST_FAILURE;
 	}
 
-	// GPIO0 channel 1 is an 8-bit input port.
-	// GPIO0 channel 2 is an 8-bit output port.
+	// Set all GPIO direction weather it is Input or output
 	XGpio_SetDataDirection(&GPIOInst0, GPIO_0_INPUT_0_CHANNEL, 0xFF);
 	XGpio_SetDataDirection(&GPIOInst0, GPIO_0_OUTPUT_0_CHANNEL, 0x00);
 
@@ -112,6 +114,10 @@ int	 do_init(void)
 
 	// enable the FIT interrupt
 	XIntc_Enable(&IntrptCtlrInst, FIT_INTERRUPT_ID);
+
+	//Clear the LED's
+	NX4IO_setLEDs(0x00);
+
 	return XST_SUCCESS;
 }
 /*
